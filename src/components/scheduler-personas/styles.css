@@ -1,0 +1,14 @@
+.demo-app {
+    font-family: Arial, sans-serif;
+    font-size: 26px;
+  }
+  
+  .demo-app-top {
+    margin: 0 0 3em;
+  }
+  
+  .demo-app-calendar {
+    margin: 0 auto;
+    max-width: 500px;
+  }
+  
