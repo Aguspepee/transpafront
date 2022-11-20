@@ -10,6 +10,8 @@ import AutocompleteLineas from '../../styled-components/styled-autocomplete-line
 import ColorToggleButton from './components/toggle-button';
 import SwitchLabels from './components/switch-labels';
 import SelectNovedad from './components/select-novedad';
+import VerticalBarChart from './components/vertical-bar-chart';
+import DoughnutChart from './components/doghonut-chart';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -56,12 +58,8 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
             <Divider />
                 <Box style={{ padding: '0.5em 0.5em 1em 1em'}}>
                     <Stack direction="column" spacing={0.5}>
-                        <Typography variant="h6" style={{ fontSize: '0.8em' }} gutterBottom>
-                        </Typography>
-                        <SelectNovedad/>
-                        <ColorToggleButton />
-                        <SwitchLabels/>
-                        
+                       <VerticalBarChart/>
+                        <DoughnutChart/>
                     </Stack>
                 </Box>
             </Collapse>
