@@ -1,35 +1,22 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Divider, Drawer, useMediaQuery } from '@mui/material';
-import { ChartBar as ChartBarIcon } from '../icons/chart-bar';
 import { Users as UsersIcon } from '../icons/users';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import { Logo } from '../components/logo';
 import { NavItem } from './nav-item';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import PaidIcon from '@mui/icons-material/Paid';
 import UserContext from '../context/userContext';
 import { useContext } from 'react';
-import styled from "styled-components";
-//import { ReactComponent as GieLogo } from "../images/transpa_blanco.svg";
 import SettingsIcon from '@mui/icons-material/Settings';
 
 //Icons
 import HomeIcon from '@mui/icons-material/Home';
-import TimelineIcon from '@mui/icons-material/Timeline';
 import PublicIcon from '@mui/icons-material/Public';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 
 import { Typography } from '@mui/material';
 import { default as LinkMaterial } from '@mui/material/Link';
-
-/* const StyledLogo = styled(GieLogo)`
-  width: 8em;
-  display: block;
-  margin: auto;
-`; */
-
 
 const items = [
   {
@@ -51,9 +38,27 @@ const items = [
     roles: ["Administrador", "Supervisor"]
   },
   {
+    href: '/indisponibilidades',
+    icon: (<EventBusyIcon fontSize="small" />),
+    title: 'Operaciones',
+    roles: ["Administrador", "Supervisor"]
+  },
+  {
+    href: '/RPM',
+    icon: (<EventNoteIcon fontSize="small" />),
+    title: 'RPM',
+    roles: ["Administrador", "Supervisor"]
+  },
+  {
     href: '/settings',
     icon: (<SettingsIcon fontSize="small" />),
     title: 'Configuracion',
+    roles: ["Administrador"]
+  },
+  {
+    href: '/upload',
+    icon: (<CloudUploadIcon fontSize="small" />),
+    title: 'Upload',
     roles: ["Administrador"]
   },
 ];

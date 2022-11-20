@@ -4,17 +4,29 @@ import * as qs from 'qs'
 //rutas Axios
 //Get ALL
 export function piquetesGetAll({ zonas, lineas }) {
-    console.log(zonas)
     let token = localStorage.getItem("token")
     return instance.get(`piquetes/?zonas=${zonas}&lineas=${lineas}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
 
-export function lineasNovedadesGet({ zonas, lineas }) {
-    console.log(zonas)
+export function zonasGet() {
     let token = localStorage.getItem("token")
-    return instance.get(`piquetes/lineas-novedades/?zonas=${zonas}&lineas=${lineas}`, {
+    return instance.get(`piquetes/zonas`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+}
+
+export function lineasGet({ search }) {
+    let token = localStorage.getItem("token")
+    return instance.get(`piquetes/lineas/?zonas=${search?.zonas}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+}
+
+export function lineasNovedadesGet({ search }) {
+    let token = localStorage.getItem("token")
+    return instance.get(`piquetes/lineas-novedades/?zonas=${search.zonas}&lineas=${search.lineas}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }

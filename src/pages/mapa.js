@@ -1,54 +1,92 @@
-import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { DashboardLayout } from '../layout/layout';
-import { MapContainer, TileLayer, LayerGroup, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from "react-leaflet-markercluster";
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react';
-import { lineasNovedadesGet, piquetesGetAll } from '../services/piquetes';
-import L from 'leaflet';
-
-const violetIcon = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
+import { lineasNovedadesGet } from '../services/piquetes';
+import MapaLineas from '../components/mapa/mapa-lineas';
+import FilterCard from '../components/mapa/filter-card';
+import NovedadesCard from '../components/mapa/novedades-card';
+import DataCard from '../components/mapa/data-card';
+import { useMapEvents, Marker, Popup, useMap } from 'react-leaflet';
+import AnalisisCard from '../components/mapa/analisis-card';
 
 function Mapa() {
   const [data, setData] = useState([])
-  const position = [-43, -65]
+  const [search, setSearch] = useState([])
+  const [map, setMap] = useState(null);
+
+  const handleSetMap = (value) => {
+    setMap(value)
+  }
+
+  const flyToPosition = (position) => {
+    map.flyTo(position, 16)
+
+  }
+
+  const handleSearchChange = (value) => {
+    setSearch(value)
+  }
+
   useEffect(() => {
     async function getList() {
       try {
-        const res = await lineasNovedadesGet({ zonas: ['ZO1'], lineas: ['FUPM2'] })
+        const res = await lineasNovedadesGet({ search })
         setData(res.data)
         console.log(res.data)
-
       } catch (error) {
         console.log(error)
       }
     }
     getList()
-  }, [])
+  }, [search.lineas])
+
   return (
     <>
       <DashboardLayout>
         <Box style={{
           position: 'relative'
-
         }}>
           <Grid
             container
-            spacing={3}
+            spacing={1}
             style={{
               position: 'absolute',
               padding: '1em 1em 1em 1em',
               top: 0,
-              right: 0,
+              left: 40,
+              zIndex: 1000,
+              width: "68%"
+            }}
+          >
+            <Grid
+              item
+              lg={7}
+              md={7}
+              xl={7}
+              xs={12}
+            >
+              <DataCard search={search} handleSearchChange={handleSearchChange} data={data} />
+
+            </Grid>
+            <Grid
+              item
+              lg={5}
+              md={5}
+              xl={5}
+              xs={12}
+            >
+              <FilterCard search={search} handleSearchChange={handleSearchChange} />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            style={{
+              position: 'absolute',
+              padding: '1em 1em 1em 1em',
+              top: 0,
+              right: 15,
               zIndex: 1000,
               width: "30%"
             }}
@@ -60,16 +98,23 @@ function Mapa() {
               xl={12}
               xs={12}
             >
-              <Card>
-                <CardHeader title="Filtros" />
-                <Divider />
-                <CardContent>
-                  HOLAAAA
-                  <Button onClick={() => console.log("hola")}>HoLA</Button>
-                </CardContent>
-
-              </Card>
+              <AnalisisCard search={search} handleSearchChange={handleSearchChange} />
             </Grid>
+
+          </Grid>
+          <MapaLineas data={data} handleSetMap={handleSetMap} />
+          <Grid
+            container
+            spacing={3}
+            style={{
+              position: 'absolute',
+              padding: '1em 1em 1em 1em',
+              bottom: 0,
+              left: 10,
+              zIndex: 1000,
+              width: "100%"
+            }}
+          >
             <Grid
               item
               lg={12}
@@ -77,73 +122,10 @@ function Mapa() {
               xl={12}
               xs={12}
             >
-              <Card>
-                <CardHeader title="Novedades" />
-                <Divider />
-                <CardContent>
-                  HOLAAAA
-                </CardContent>
-
-              </Card>
+              <NovedadesCard search={search} handleSearchChange={handleSearchChange} flyToPosition={flyToPosition}/>
             </Grid>
           </Grid>
-
-          <MapContainer center={position} zoom={7} scrollWheelZoom={true} style={{ "height": 'calc(100vh - 65px)', "width": "100%" }}>
-
-
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {
-              data.map((piquete, index) => {
-                //console.log("LAT"+ piquete["Latitud (Y)"] + "LONG"+ Number(piquete["Longitud (x)"]))
-                if (piquete.latitud) {
-
-                  return (
-                    <Marker icon={violetIcon} key={index} position={[-Number(piquete.latitud), -Number(piquete.longitud)]}>
-                      <Popup>
-                        {`Piquete ${piquete.piquete}`}
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell>
-                                TIPO
-                              </TableCell>
-                              <TableCell>
-                                FECHA
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-
-                            {
-                              piquete.novedades.map((novedad) => {
-                                return (
-                                  <TableRow>
-                                    <TableCell>
-                                      {novedad.codif_txt_cod}
-                                    </TableCell>
-                                    <TableCell>
-                                      {novedad.fecha}
-                                    </TableCell>
-                                  </TableRow>
-                                )
-
-                              })
-                            }
-
-                          </TableBody>
-                        </Table>
-                      </Popup>
-                    </Marker>)
-                }
-              })
-            }
-          </MapContainer>
         </Box>
-
       </DashboardLayout>
     </>
   )
