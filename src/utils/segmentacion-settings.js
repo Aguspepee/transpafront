@@ -12,13 +12,13 @@ export const segmentacionSettings = (segmentacion) => {
             })
         case "mensual":
             return ({
-                parser:'YYYY-MM',
+                parser:'M-YYYY',
                 unit: "month",
-                tooltipFormat: 'MM-YYYY',
+                tooltipFormat: 'M-YYYY',
                 displayFormats: {
-                    'month': 'MM-YYYY'
+                    'month': 'M-YYYY'
                 },
-                timeFormat: 'YYYY-MM'
+                timeFormat: 'M-YYYY'
             })
         case "semanal":
             return ({

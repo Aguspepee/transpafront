@@ -12,7 +12,7 @@ import AnalisisCard from '../components/mapa/analisis-card';
 
 function Mapa() {
   const [data, setData] = useState([])
-  const [search, setSearch] = useState([])
+  const [search, setSearch] = useState({reparadas:false, historico:false})
   const [map, setMap] = useState(null);
 
   const handleSetMap = (value) => {
@@ -33,13 +33,12 @@ function Mapa() {
       try {
         const res = await lineasNovedadesGet({ search })
         setData(res.data)
-        console.log(res.data)
       } catch (error) {
         console.log(error)
       }
     }
     getList()
-  }, [search.lineas])
+  }, [search.lineas, search.codigos])
 
   return (
     <>

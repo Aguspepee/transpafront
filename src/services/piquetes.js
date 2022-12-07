@@ -26,7 +26,7 @@ export function lineasGet({ search }) {
 
 export function lineasNovedadesGet({ search }) {
     let token = localStorage.getItem("token")
-    return instance.get(`piquetes/lineas-novedades/?zonas=${search.zonas}&lineas=${search.lineas}`, {
+    return instance.get(`piquetes/lineas-novedades/?zonas=${search.zonas}&lineas=${search.lineas}&codigos=${search?.codigos?.toString()}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }

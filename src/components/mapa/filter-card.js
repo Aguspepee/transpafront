@@ -58,9 +58,9 @@ function FilterCard({ search, handleSearchChange, ...props }) {
                     <Stack direction="column" spacing={0.5}>
                         <Typography variant="h6" style={{ fontSize: '0.8em' }} gutterBottom>
                         </Typography>
-                        <SelectNovedad/>
+                        <SelectNovedad search={search} handleSearchChange={handleSearchChange}/>
                         <ColorToggleButton />
-                        <SwitchLabels/>
+                        <SwitchLabels search={search} handleSearchChange={handleSearchChange}/>
                         
                     </Stack>
                 </Box>

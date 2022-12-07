@@ -36,7 +36,7 @@ function FilterCard({ search, handleSearchChange, data, ...props }) {
             }}>
                 <Box style={{ padding: '0.5em 0em 0em 1em' }}>
                     <Typography variant="h6" style={{ padding: '0em 0em 0em 0em', fontSize: '0.8em' }} gutterBottom>
-                        {data[0]?.linea}
+                        {data[0] ? data[0]?.linea : "Seleccione una línea"}
                     </Typography>
                     <Typography variant="h6" style={{ padding: '0em 0em 0em 0em', fontSize: '0.6em' }} gutterBottom>
                         {data[0]?.denominacion}
@@ -58,11 +58,11 @@ function FilterCard({ search, handleSearchChange, data, ...props }) {
             </Box>
 
             <Divider />
-            <Collapse in={expanded}  timeout="auto">
-                <Box style={{padding:'0.5em 0.5em 0.5em 0.5em'}}>
+            <Collapse in={expanded} timeout="auto">
+                <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
                     <Stack direction="row" spacing={1} >
                         <AutocompleteZonas description={"Zonas"} search={search} handleSearchChange={handleSearchChange} id="zonas" getFunction={zonasGet} />
-                        <AutocompleteLineas description={"Lineas"} search={search} handleSearchChange={handleSearchChange} id="lineas" getFunction={lineasGet} /> 
+                        <AutocompleteLineas description={"Lineas"} search={search} handleSearchChange={handleSearchChange} id="lineas" getFunction={lineasGet} />
                     </Stack>
                 </Box>
             </Collapse>

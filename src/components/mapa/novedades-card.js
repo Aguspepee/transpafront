@@ -8,8 +8,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import TabPanel from './components/novedades-card-tabpanel'
+import TabPanel from './components/novedades-table'
 import { aisladores, estructura_base, hilo_guardia, morseteria_conductor, picadas, seguridad_publica } from '../../utils/codigos-lineas';
+import NovedadesTable from './components/novedades-table';
 
 
 const AntTabs = styled(Tabs)({
@@ -86,30 +87,8 @@ function NovedadesCard({ search, location, flyToPosition, ...props }) {
             <Divider />
             <Collapse in={expanded} unmountOnExit timeout="auto">
                 <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <AntTabs
-                            variant="scrollable"
-                            scrollButtons="auto"
-                            value={value}
-                            onChange={handleChange}
-                            aria-label="basic tabs example"
-                            style={{ height: "10px" }}>
-                            <AntTab label="TODAS" {...a11yProps(0)} />
-                            <AntTab label="Hilo de Guardia" {...a11yProps(1)} />
-                            <AntTab label="Aisladores" {...a11yProps(2)} />
-                            <AntTab label="Morseteria Conductor" {...a11yProps(3)} />
-                            <AntTab label="Estructura Base" {...a11yProps(4)} />
-                            <AntTab label="Picada" {...a11yProps(5)} />
-                            <AntTab label="Seguridad Pública" {...a11yProps(6)} />
-                        </AntTabs>
-                    </Box>
-                    <TabPanel value={value} index={0} search={search} codigos={[]} flyToPosition={flyToPosition} />
-                    <TabPanel value={value} index={1} search={search} codigos={hilo_guardia} flyToPosition={flyToPosition} />
-                    <TabPanel value={value} index={2} search={search} codigos={aisladores} flyToPosition={flyToPosition} />
-                    <TabPanel value={value} index={3} search={search} codigos={morseteria_conductor} flyToPosition={flyToPosition} />
-                    <TabPanel value={value} index={4} search={search} codigos={estructura_base} flyToPosition={flyToPosition} />
-                    <TabPanel value={value} index={5} search={search} codigos={picadas} flyToPosition={flyToPosition} />
-                    <TabPanel value={value} index={6} search={search} codigos={seguridad_publica} flyToPosition={flyToPosition} />
+                    <NovedadesTable flyToPosition={flyToPosition} search={search}/>
+
                 </Box>
             </Collapse>
         </Card>

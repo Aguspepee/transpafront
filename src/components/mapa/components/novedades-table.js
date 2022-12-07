@@ -1,35 +1,52 @@
-import { Typography, Box, Table, TableHead, TableRow, TableCell, TableBody, Paper, IconButton, Tooltip, withStyles } from '@mui/material';
+import { Typography, Box, Table, TableHead, TableBody, Paper, IconButton, Tooltip, withStyles } from '@mui/material';
 import 'leaflet/dist/leaflet.css'
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { novedadesGetWithMeta } from '../../../services/novedades';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import { styled } from '@mui/material/styles';
 import EstadoChip from './estado-chip';
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableRow, { tableRowClasses } from "@mui/material/TableRow";
 
-const StyledTableCell = styled('TableCell')(({ theme }) => ({
-    root: {
-        height: 10,
-        padding:0
-      }
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+     // backgroundColor: theme.palette.common.black,
+     // color: theme.palette.common.white
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 11,
+      padding: "0px 0px 0px 15px"
+    }
+  }));
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    [`&.${tableRowClasses.root}`]: {
+      height: "10px"
+    },
+    "&:nth-of-type(odd)": {
+     // backgroundColor: theme.palette.action.hover
+    },
+    // hide last border
+    "&:last-child td, &:last-child th": {
+      border: 0,
+      height: 1
+    }
   }));
 
-  
-
-function TabBase(props) {
-    const { value, index, search, codigos, flyToPosition, ...other } = props;
+export default function NovedadesTable(props) {
+    const { search,  flyToPosition, ...other } = props;
     const [novedades, setNovedades] = useState([])
     useEffect(() => {
         const getNovedades = async () => {
-            const res = await novedadesGetWithMeta({ search, codigos })
+            const res = await novedadesGetWithMeta({ search })
             setNovedades(res.data)
+            console.log()
         }
         getNovedades()
     }, [search]
     )
     return (
         <>
-            {value === index && (
                 <Paper sx={{ overflowX: "auto", width: "100%", height: `110px` }}>
                     <Table size='small' stickyHeader>
                         <TableHead>
@@ -64,37 +81,37 @@ function TabBase(props) {
                             {novedades.map((novedad, index) => {
 
                                 return (
-                                    <TableRow  key={index}>
-                                        <TableCell>
-                                            <Typography variant="body1" style={{ fontSize: '0.75em' }} >{novedad.orden}</Typography>
+                                    <StyledTableRow  key={index}>
+                                        <StyledTableCell>
+                                            {novedad.orden}
 
-                                        </TableCell >
-                                        <TableCell>
-                                            <Typography variant="body1" style={{ fontSize: '0.75em' }} >{novedad.fecha}</Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography variant="body1" style={{ fontSize: '0.75em' }} >{novedad.equipo}</Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography variant="body1" style={{ fontSize: '0.75em' }} >{novedad.denominacion}</Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography variant="body1" style={{ fontSize: '0.75em' }} > {novedad.codigo_valorac}</Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography variant="body1" style={{ fontSize: '0.75em' }} > {novedad.codif_txt_cod}</Typography>
-                                        </TableCell>
-                                        <TableCell>
+                                        </StyledTableCell >
+                                        <StyledTableCell>
+                                            {novedad.fecha}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            {novedad.equipo}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            {novedad.denominacion}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                           {novedad.codigo_valorac}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                             {novedad.codif_txt_cod}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
                                             <EstadoChip estado={novedad.valor_medido}/>
-                                        </TableCell>
-                                        <TableCell>
+                                        </StyledTableCell>
+                                        <StyledTableCell>
                                             <Tooltip title="Ir al punto">
                                                 <IconButton size='small' sx={{ fontSize: "15px", padding: '3px 3px 3px 3px' }} onClick={() => flyToPosition([-novedad.piquete[0]?.latitud, -novedad.piquete[0]?.longitud])}>
                                                     <NearMeIcon sx={{ fontSize: "15px" }} />
                                                 </IconButton>
                                             </Tooltip>
-                                        </TableCell>
-                                    </TableRow>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
                                 )
                             })
                             }
@@ -103,26 +120,8 @@ function TabBase(props) {
                     </Table>
                 </Paper>
 
-            )}
+
         </>
     );
 }
 
-TabBase.propTypes = {
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-export default function TabPanel({ value, index, search, codigos, flyToPosition, ...other }) {
-
-    return (
-        <>
-            {value === index && <TabBase index={index} value={value} search={search} codigos={codigos} flyToPosition={flyToPosition} />}
-        </>
-    );
-}
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};

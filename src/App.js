@@ -24,6 +24,7 @@ import SessionTimeout from './styled-components/alerts/session-timeout';
 import Settings from './pages/settings';
 import Mapa from './pages/mapa';
 import Upload from './pages/upload';
+import ReportesDIMA from './pages/reportes-dima';
 /* import SchedulerPersonas from './pages/scheduler-personas'; */
 
 function App() {
@@ -82,6 +83,9 @@ function App() {
 
              {/* Actualiar*/}
              <Route path="/upload" element={<Private Component={Upload} user={user} roles={["Administrador"]} />} />
+
+             {/* Reportes*/}
+             <Route path="/reportes/DIMA" element={<Private Component={ReportesDIMA} user={user} roles={["Administrador"]} />} />
 
 
           </Routes>

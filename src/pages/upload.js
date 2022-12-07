@@ -52,6 +52,36 @@ function Upload() {
                         Subtitulo="Seleccione el archivo"
                         fileTypes=".xlsx , xls"
                     ></Uploader>
+                    <Uploader
+                        dbSubBaseURL="indisponibilidades"
+                        Titulo="Indisponibilidades 1Resui"
+                        Subtitulo="Seleccione el archivo"
+                        fileTypes=".xlsx , xls"
+                    ></Uploader>
+                     <Uploader
+                        dbSubBaseURL="lineas"
+                        Titulo="Base de datos de lineas"
+                        Subtitulo="Seleccione el archivo"
+                        fileTypes=".xlsx , xls"
+                    ></Uploader>
+                     <Uploader
+                        dbSubBaseURL="puntos"
+                        Titulo="Base de datos de Puntos de Conexión"
+                        Subtitulo="Seleccione el archivo"
+                        fileTypes=".xlsx , xls"
+                    ></Uploader>
+                    <Uploader
+                        dbSubBaseURL="maquinas/actualizar-historiales"
+                        Titulo="Actualizar Historial de Máquinas"
+                        Subtitulo="Seleccione el archivo"
+                        fileTypes=".xlsx , xls"
+                    ></Uploader>
+                     <Uploader
+                        dbSubBaseURL="maquinas/borrar-historiales"
+                        Titulo="Borra Historial de Máquinas (auxiliar)"
+                        Subtitulo="Seleccione el archivo"
+                        fileTypes=".xlsx , xls"
+                    ></Uploader>
 
                 </Container>
             </Box>

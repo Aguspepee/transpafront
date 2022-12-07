@@ -28,10 +28,10 @@ export const options = {
             display: false
             //position: 'top'
         },
-        title: {
+     /*    title: {
             display: true,
             text: 'Cantidad Mensual',
-        },
+        }, */
     },
 };
 

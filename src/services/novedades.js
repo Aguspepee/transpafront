@@ -10,9 +10,9 @@ export function novedadesGetAll({ zonas, lineas }) {
     })
 }
 
-export function novedadesGetWithMeta({ search,codigos }) {
+export function novedadesGetWithMeta({ search }) {
     let token = localStorage.getItem("token")
-    return instance.get(`novedades/withmeta/?zonas=${search.zonas}&lineas=${search.lineas},&codigos=${codigos}`, {
+    return instance.get(`novedades/withmeta/?zonas=${search.zonas}&lineas=${search.lineas}&codigos=${search?.codigos?.toString()}&reparadas=${search.reparadas}&historico=${search.historico}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
