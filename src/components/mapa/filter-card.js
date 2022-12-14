@@ -2,11 +2,7 @@ import { Card, CardContent, Divider, Typography, Stack, Collapse, Box, IconButto
 import { styled } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css'
 import { useState } from 'react';
-import { lineasGet, zonasGet } from '../../services/piquetes';
-import LimitTags from '../../styled-components/styled-autocomplete-limittags';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AutocompleteZonas from '../../styled-components/styled-autocomplete-zonas';
-import AutocompleteLineas from '../../styled-components/styled-autocomplete-lineas';
 import ColorToggleButton from './components/toggle-button';
 import SwitchLabels from './components/switch-labels';
 import SelectNovedad from './components/select-novedad';
