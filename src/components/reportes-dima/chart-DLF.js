@@ -1,6 +1,7 @@
 import { Line, getElementAtEvent } from 'react-chartjs-2';
 import { useRef } from 'react';
-import { Box, Grid, Card, IconButton, Divider, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
@@ -8,27 +9,54 @@ import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls'
+import { DLFValue } from '../../services/reportes-dima';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 Chart.register(...registerables);
 
-export const ChartDLF = ({ results, ...props }) => {
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
+export const ChartDLF = ({ start, end, ...props }) => {
+  const [expanded, setExpanded] = useState(false)
+  const [results, setResults] = useState([])
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
+
   const onClick = (event) => {
     console.log(getElementAtEvent(chartRef.current, event));
   }
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+  useEffect(() => {
+    const getData = async () => {
+      const res = await DLFValue({ start: start, end: end })
+      setResults(res.data)
+    }
+    getData()
+  }, [])
 
   const data = {
     datasets:
       [{
         label: `DLF`,
         data: results,
-        backgroundColor: colors_palette[2],
-        borderColor: colors_palette[2],
+        backgroundColor: colors_palette[1],
+        borderColor: colors_palette[1],
         fill: false,
         parsing: {
-          yAxisKey: 'data.DLF'
+          yAxisKey: 'data'
         },
       }]
 
@@ -121,6 +149,36 @@ export const ChartDLF = ({ results, ...props }) => {
           onClick={onClick}
         />
       </Box>
+      <Box sx={{
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+      }}>
+        <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
+          Filtros
+        </Typography>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+          size="small"
+        >
+          <ExpandMoreIcon size="small" />
+        </ExpandMore>
+      </Box>
+
+      <Divider />
+      <Collapse in={expanded} timeout="auto">
+        <Box style={{ padding: '0.5em 0.5em 1em 1em' }}>
+          <Stack direction="column" spacing={0.5}>
+            <Typography variant="h6" style={{ fontSize: '0.8em' }} gutterBottom>
+            </Typography>
+
+          </Stack>
+        </Box>
+      </Collapse>
     </Card>
   );
 };

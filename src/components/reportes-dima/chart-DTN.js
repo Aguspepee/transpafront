@@ -8,31 +8,40 @@ import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls'
+import { DTNValue } from '../../services/reportes-dima';
 
 Chart.register(...registerables);
 
-export const ChartDTN = ({ results, ...props }) => {
-
+export const ChartDTN = ({ start, end, ...props }) => {
+  const [results, setResults] = useState([])
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
   const onClick = (event) => {
     console.log(getElementAtEvent(chartRef.current, event));
   }
 
+  useEffect(() => {
+    const getData = async () => {
+      const res = await DTNValue({ start: start, end: end })
+      setResults(res.data)
+    }
+    getData()
+  }, [])
+
   const data = {
     datasets:
       [{
         label: `DTN`,
         data: results,
-        backgroundColor: colors_palette[4],
-        borderColor: colors_palette[4],
+        backgroundColor: colors_palette[3],
+        borderColor: colors_palette[3],
         fill: false,
         parsing: {
-          yAxisKey: 'data.DTN'
+          yAxisKey: 'data'
         },
       }]
-
   };
+
   const options = {
     animation: true,
     cornerRadius: 20,
@@ -67,7 +76,7 @@ export const ChartDTN = ({ results, ...props }) => {
   };
 
   return (
-    <Card {...props}>
+    <Card>
       <Box
         sx={{
           alignItems: 'center',
@@ -89,7 +98,7 @@ export const ChartDTN = ({ results, ...props }) => {
               variant="h6"
               style={{ fontSize: "1em" }}
             >
-              {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE TRANSFORMADORES QUE ORIGINAN ENS (DTN)`}
+              {`DISPONIBILIDAD MEDIA ANUAL MOVIL DE TRANSFORMADORES QUE ORIGINAN ENS (DTN)`}
             </Typography>
           </Grid>
           <Grid item>

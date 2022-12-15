@@ -1,39 +1,43 @@
-import { Line, getElementAtEvent } from 'react-chartjs-2';
-import { useRef } from 'react';
+import { Line } from 'react-chartjs-2';
 import { Box, Grid, Card, IconButton, Divider, Typography } from '@mui/material';
-import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
 import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls'
+import { DLPValue } from '../../services/reportes-dima';
+import { dateArray } from '../../utils/list';
 
-Chart.register(...registerables);
+//Chart.register(...registerables);
 
-export const ChartDLP = ({ results, ...props }) => {
-
+export const ChartDLP = ({start, end, ...props  }) => {
+  const [results, setResults] = useState([])
   const settings = segmentacionSettings("mensual")
-  const chartRef = useRef();
-  const onClick = (event) => {
-    console.log(getElementAtEvent(chartRef.current, event));
-  }
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await DLPValue({ start: start, end: end })
+      setResults(res.data)
+    }
+    getData()
+  }, [])
+
 
   const data = {
     datasets:
-      [
-      {
+      [{
         label: `DLP`,
         data: results,
-        backgroundColor: colors_palette[3],
-        borderColor: colors_palette[3],
+        backgroundColor: colors_palette[5],
+        borderColor: colors_palette[5],
         fill: false,
         parsing: {
-          yAxisKey: 'data.DLP'
+          yAxisKey: 'data'
         },
       }]
-
   };
+
   const options = {
     animation: true,
     cornerRadius: 20,
@@ -68,7 +72,7 @@ export const ChartDLP = ({ results, ...props }) => {
   };
 
   return (
-    <Card {...props}>
+    <Card>
       <Box
         sx={{
           alignItems: 'center',
@@ -116,10 +120,9 @@ export const ChartDLP = ({ results, ...props }) => {
         }}
       >
         <Line
-          ref={chartRef}
           data={data}
           options={options}
-          onClick={onClick}
+
         />
       </Box>
     </Card>

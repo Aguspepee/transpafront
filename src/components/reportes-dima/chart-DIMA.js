@@ -3,19 +3,30 @@ import { useRef } from 'react';
 import { Box, Grid, Card, IconButton, Divider, Typography } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
+import { useState, useEffect } from 'react';
 import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls';
 import { DIMA_historico } from '../../utils/list';
+import { DIMA } from '../../services/reportes-dima';
 Chart.register(...registerables);
 
-export const ChartDIMA = ({ results, ...props }) => {
+export const ChartDIMA = ({ start, end, ...props }) => {
+  const [results, setResults] = useState([])
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
   const onClick = (event) => {
     console.log(getElementAtEvent(chartRef.current, event));
   }
+
+   useEffect(() => {
+    const getData = async () => {
+      const res = await DIMA({ start: start, end: end })
+      setResults(res.data)
+    }
+    getData()
+  }, [])
 
   const data = {
     datasets:
@@ -26,7 +37,7 @@ export const ChartDIMA = ({ results, ...props }) => {
         borderColor: colors_palette[1],
         fill: false,
         parsing: {
-          yAxisKey: 'data.DIMA'
+          yAxisKey: 'data'
         },
       },
       {
@@ -35,6 +46,32 @@ export const ChartDIMA = ({ results, ...props }) => {
         backgroundColor: colors_palette[2],
         borderColor: colors_palette[2],
         fill: false,
+        parsing: {
+          xAxisKey: 'date',
+          yAxisKey: 'value'
+        },
+      },
+      {
+        label: `VB ENRE`,
+        data: [{date:"01/2011", value:99.943556},{date:"12/2015", value:99.943556}],
+        backgroundColor: colors_palette[3],
+        borderColor: colors_palette[3],
+        borderWidth: 0.9,
+        fill: false,
+        pointStyle: 'triangle',
+        parsing: {
+          xAxisKey: 'date',
+          yAxisKey: 'value'
+        },
+      },
+      {
+        label: `VM ENRE`,
+        data: [{date:"01/2011", value:99.977627},{date:"12/2015", value:99.977627}],
+        backgroundColor: colors_palette[4],
+        borderColor: colors_palette[4],
+        borderWidth: 0.9,
+        fill: false,
+        pointStyle: 'triangle',
         parsing: {
           xAxisKey: 'date',
           yAxisKey: 'value'
