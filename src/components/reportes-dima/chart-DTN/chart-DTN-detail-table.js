@@ -81,7 +81,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                             variant="h6"
                             style={{ fontSize: "0.8em" , padding:"5px 0px 5px 23px"}}
                         >
-                            {`DETALLE POR TRANSFORMADOR`}
+                            {`DETALLE POR TRANSFORMADOR ${date.month||"-"}/${date.year||"-"}`}
                         </Typography>
                     </Grid>
                     <Grid item>

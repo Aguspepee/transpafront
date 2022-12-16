@@ -14,6 +14,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
+import SsidChartIcon from '@mui/icons-material/SsidChart';
 
 import { Typography } from '@mui/material';
 import { default as LinkMaterial } from '@mui/material/Link';
@@ -30,6 +31,12 @@ const items = [
     icon: (<PublicIcon fontSize="small" />),
     title: 'Mapa',
     roles: ["Administrador", "Supervisor"]
+  },
+  {
+    href: '/reportes/DIMA',
+    icon: (<SsidChartIcon fontSize="small" />),
+    title: 'DIMA',
+    roles: ["Administrador"]
   },
   {
     href: '/users-list',
@@ -61,6 +68,7 @@ const items = [
     title: 'Upload',
     roles: ["Administrador"]
   },
+
 ];
 
 export const DashboardSidebar = (props) => {

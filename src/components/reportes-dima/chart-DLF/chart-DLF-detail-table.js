@@ -80,7 +80,7 @@ export default function CollapseDLFDetailTable({ date, ...rest }) {
                             variant="h6"
                             style={{ fontSize: "0.8em" , padding:"5px 0px 5px 23px"}}
                         >
-                            {`DETALLE POR LÍNEA`}
+                            {`DETALLE POR LÍNEA ${date.month||"-"}/${date.year||"-"}`}
                         </Typography>
                     </Grid>
                     <Grid item>

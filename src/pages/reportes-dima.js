@@ -7,6 +7,7 @@ import { ChartDLP } from '../components/reportes-dima/chart-DLP';
 import { ChartDTN } from '../components/reportes-dima/chart-DTN';
 import { ChartDCF } from '../components/reportes-dima/chart-DCF';
 import { dateArray } from '../utils/list';
+import { ChartVPM } from '../components/reportes-dima/chart-VPM';
 
 
 function ReportesDIMA() {
@@ -53,15 +54,6 @@ function ReportesDIMA() {
               >
                 <ChartDLF start={start} end={end} />
               </Grid>
-               <Grid
-                item
-                lg={12}
-                md={12}
-                xl={12}
-                xs={12}
-              >
-                <ChartDLP start={start} end={end}  />
-              </Grid> 
               <Grid
                 item
                 lg={12}
@@ -69,17 +61,43 @@ function ReportesDIMA() {
                 xl={12}
                 xs={12}
               >
-                <ChartDTN start={start} end={end}  />
-              </Grid> 
-             <Grid
+                <ChartDLP start={start} end={end} />
+              </Grid>
+              <Grid
                 item
                 lg={12}
                 md={12}
                 xl={12}
                 xs={12}
               >
-                <ChartDCF start={start} end={end}  />
-              </Grid> 
+                <ChartDTN start={start} end={end} />
+              </Grid>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                xl={12}
+                xs={12}
+              >
+                <ChartDCF start={start} end={end} />
+              </Grid>
+            </Grid>
+            <Typography variant="h5" gutterBottom style={{padding:"1em 1em 0em 0em"}}>
+              Afectación de las sanciones por no alcanzar la calidad objetivo
+            </Typography>
+            <Grid
+              container
+              spacing={3}
+            >
+              <Grid
+                item
+                lg={12}
+                md={12}
+                xl={12}
+                xs={12}
+              >
+                <ChartVPM start={start} end={end} />
+              </Grid>
             </Grid>
           </Container>
         </Box>

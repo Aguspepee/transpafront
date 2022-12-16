@@ -78,7 +78,7 @@ export default function CollapseDCFDetailTable({ date, ...rest }) {
                             variant="h6"
                             style={{ fontSize: "0.8em" , padding:"5px 0px 5px 23px"}}
                         >
-                            {`DETALLE POR PUNTO DE CONEXIÓN`}
+                            {`DETALLE POR PUNTO DE CONEXIÓN ${date.month||"-"}/${date.year||"-"}`}
                         </Typography>
                     </Grid>
                     <Grid item>
