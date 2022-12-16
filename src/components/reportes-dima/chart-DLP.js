@@ -1,5 +1,8 @@
-import { Line } from 'react-chartjs-2';
-import { Box, Grid, Card, IconButton, Divider, Typography } from '@mui/material';
+import { Line, getElementAtEvent } from 'react-chartjs-2';
+import { useRef } from 'react';
+import { styled } from '@mui/material/styles';
+import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse, Tooltip } from '@mui/material';
+import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
 import { colors_palette } from "../../utils/colors-palette";
@@ -7,14 +10,23 @@ import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls'
 import { DLPValue } from '../../services/reportes-dima';
-import { dateArray } from '../../utils/list';
+import CollapseDLPDetailTable from './chart-DLP/chart-DLP-detail-table';
+import HelpIcon from '@mui/icons-material/Help';
+Chart.register(...registerables);
 
-//Chart.register(...registerables);
 
-export const ChartDLP = ({start, end, ...props  }) => {
+export const ChartDLP = ({ start, end, ...props }) => {
   const [results, setResults] = useState([])
   const settings = segmentacionSettings("mensual")
+  const chartRef = useRef();
+  const [selectedDate, setSelectedDate] = useState({ year: 2022, month: 12 })
 
+  const onClick = (event) => {
+    const index = getElementAtEvent(chartRef.current, event)[0]?.index;
+    const date = results[index]?.date
+    setSelectedDate({ year: date?.split("/")[1], month: date?.split("/")[0] })
+
+  }
   useEffect(() => {
     const getData = async () => {
       const res = await DLPValue({ start: start, end: end })
@@ -23,21 +35,20 @@ export const ChartDLP = ({start, end, ...props  }) => {
     getData()
   }, [])
 
-
   const data = {
     datasets:
       [{
         label: `DLP`,
         data: results,
-        backgroundColor: colors_palette[5],
-        borderColor: colors_palette[5],
+        backgroundColor: colors_palette[4],
+        borderColor: colors_palette[4],
         fill: false,
         parsing: {
           yAxisKey: 'data'
         },
       }]
-  };
 
+  };
   const options = {
     animation: true,
     cornerRadius: 20,
@@ -72,7 +83,7 @@ export const ChartDLP = ({start, end, ...props  }) => {
   };
 
   return (
-    <Card>
+    <Card {...props}>
       <Box
         sx={{
           alignItems: 'center',
@@ -94,8 +105,23 @@ export const ChartDLP = ({start, end, ...props  }) => {
               variant="h6"
               style={{ fontSize: "1em" }}
             >
-              {`DISPONIBILIDAD MEDIA ANUAL MOVIL DE SALIDAS DE LÍNEAS PROGRAMADAS (DLP)`}
+              {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE SALIDAS DE LÍNEAS FORZADAS (DLP)`}
+              <Tooltip title={
+                `La disponibilidad media anual móvil de salidas de líneas forzadas (DLP) para un mes "i" se 
+                calcula como uno menos el cociente entre la sumatoria del producto entre las horas forzadas 
+                indisponibles de la línea “j” en el año móvil por la longitud de la línea “j” (l jif ) y la sumatoria 
+                de las horas de cada mes del año móvil (H j) por la longitud total de las líneas en cada mes 
+                (L j).`}
+>
+                <IconButton
+                  variant="contained"
+                  size='small'
+                >
+                  <HelpIcon fontSize='inerhit' />
+                </IconButton>
+              </Tooltip>
             </Typography>
+
           </Grid>
           <Grid item>
             <Box sx={{ m: 1 }}>
@@ -120,11 +146,13 @@ export const ChartDLP = ({start, end, ...props  }) => {
         }}
       >
         <Line
+          ref={chartRef}
           data={data}
           options={options}
-
+          onClick={onClick}
         />
       </Box>
+      <CollapseDLPDetailTable date={selectedDate} />
     </Card>
   );
 };

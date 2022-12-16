@@ -1,7 +1,7 @@
 import { Line, getElementAtEvent } from 'react-chartjs-2';
 import { useRef } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse } from '@mui/material';
+import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse, Tooltip } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
@@ -10,35 +10,23 @@ import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls'
 import { DLFValue } from '../../services/reportes-dima';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-
+import CollapseDLFDetailTable from './chart-DLF/chart-DLF-detail-table';
+import HelpIcon from '@mui/icons-material/Help';
 Chart.register(...registerables);
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 export const ChartDLF = ({ start, end, ...props }) => {
-  const [expanded, setExpanded] = useState(false)
   const [results, setResults] = useState([])
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
+  const [selectedDate, setSelectedDate] = useState({ year: 2022, month: 12 })
 
   const onClick = (event) => {
-    console.log(getElementAtEvent(chartRef.current, event));
-  }
+    const index = getElementAtEvent(chartRef.current, event)[0]?.index;
+    const date = results[index]?.date
+    setSelectedDate({ year: date?.split("/")[1], month: date?.split("/")[0] })
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  }
   useEffect(() => {
     const getData = async () => {
       const res = await DLFValue({ start: start, end: end })
@@ -117,8 +105,23 @@ export const ChartDLF = ({ start, end, ...props }) => {
               variant="h6"
               style={{ fontSize: "1em" }}
             >
-              {`DISPONIBILIDAD MEDIA ANUAL MOVIL DE SALIDAS DE LÍNEAS FORZADAS (DLF)`}
+              {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE SALIDAS DE LÍNEAS FORZADAS (DLF)`}
+              <Tooltip title={
+                `La disponibilidad media anual móvil de salidas de líneas forzadas (DLF) para un mes "i" se 
+                calcula como uno menos el cociente entre la sumatoria del producto entre las horas forzadas 
+                indisponibles de la línea “j” en el año móvil por la longitud de la línea “j” (l jif ) y la sumatoria 
+                de las horas de cada mes del año móvil (H j) por la longitud total de las líneas en cada mes 
+                (L j).`}
+>
+                <IconButton
+                  variant="contained"
+                  size='small'
+                >
+                  <HelpIcon fontSize='inerhit' />
+                </IconButton>
+              </Tooltip>
             </Typography>
+
           </Grid>
           <Grid item>
             <Box sx={{ m: 1 }}>
@@ -149,36 +152,7 @@ export const ChartDLF = ({ start, end, ...props }) => {
           onClick={onClick}
         />
       </Box>
-      <Box sx={{
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-      }}>
-        <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
-          Filtros
-        </Typography>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-          size="small"
-        >
-          <ExpandMoreIcon size="small" />
-        </ExpandMore>
-      </Box>
-
-      <Divider />
-      <Collapse in={expanded} timeout="auto">
-        <Box style={{ padding: '0.5em 0.5em 1em 1em' }}>
-          <Stack direction="column" spacing={0.5}>
-            <Typography variant="h6" style={{ fontSize: '0.8em' }} gutterBottom>
-            </Typography>
-
-          </Stack>
-        </Box>
-      </Collapse>
+      <CollapseDLFDetailTable date={selectedDate} />
     </Card>
   );
 };

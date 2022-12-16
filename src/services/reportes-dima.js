@@ -40,31 +40,31 @@ export function DCFValue({ start, end  }) {
 }
 
 
-//--------------DETAIL TABLE-----------//
-export function DLFTable({ year, month }) {
+//--------------DETAIL TABLE--------------//
+export function DLFDetailTable({ year, month, order, orderBy }) {
     let token = localStorage.getItem("token")
-    return instance.get(`reportes/DIMA/DLF-table?year=${year}&month=${month}`, {
+    return instance.get(`reportes/DIMA/DLF-detail-table?year=${year}&month=${month}&order=${order}&orderBy=${orderBy}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
 
-export function DLPTable({ year, month }) {
+export function DLPDetailTable({ year, month, order, orderBy  }) {
     let token = localStorage.getItem("token")
-    return instance.get(`reportes/DIMA/DLP-table?year=${year}&month=${month}`, {
+    return instance.get(`reportes/DIMA/DLP-detail-table?year=${year}&month=${month}&order=${order}&orderBy=${orderBy}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
 
-export function DTNTable({ year, month }) {
+export function DTNDetailTable({ year, month, order, orderBy  }) {
     let token = localStorage.getItem("token")
-    return instance.get(`reportes/DIMA/DTN-table?year=${year}&month=${month}`, {
+    return instance.get(`reportes/DIMA/DTN-detail-table?year=${year}&month=${month}&order=${order}&orderBy=${orderBy}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
 
-export function DCFTable({ year, month }) {
+export function DCFDetailTable({ year, month, order, orderBy  }) {
     let token = localStorage.getItem("token")
-    return instance.get(`reportes/DIMA/DCF-table?year=${year}&month=${month}`, {
+    return instance.get(`reportes/DIMA/DCF-detail-table?year=${year}&month=${month}&order=${order}&orderBy=${orderBy}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
