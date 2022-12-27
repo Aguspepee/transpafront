@@ -1,6 +1,6 @@
 import { Line, getElementAtEvent } from 'react-chartjs-2';
 import { useRef } from 'react';
-import { Box, Grid, Card, IconButton, Divider, Typography } from '@mui/material';
+import { Box, Grid, Card, IconButton, Divider, Typography, LinearProgress } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
@@ -10,23 +10,37 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls';
 import { DIMA_historico } from '../../utils/list';
 import { DIMA } from '../../services/reportes-dima';
+import CollapseDIMADetailTable from './chart-DIMA/chart-DIMA-detail-table';
 Chart.register(...registerables);
 
 export const ChartDIMA = ({ start, end, ...props }) => {
   const [results, setResults] = useState([])
+
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
+  const [loading, setLoading] = useState(true)
   const onClick = (event) => {
-    console.log(getElementAtEvent(chartRef.current, event));
+    //console.log(getElementAtEvent(chartRef.current, event));
   }
 
-   useEffect(() => {
-    const getData = async () => {
-      const res = await DIMA({ start: start, end: end })
-      setResults(res.data)
+  useEffect(() => {
+    setLoading(true)
+    try {
+      const getData = async () => {
+        const res = await DIMA({ start: start, end: end })
+        setResults(res.data)
+        setLoading(false)
+      }
+      getData()
+    } catch (error) {
+      console.log(error)
     }
-    getData()
+
   }, [])
+
+
+
+
 
   const data = {
     datasets:
@@ -40,8 +54,8 @@ export const ChartDIMA = ({ start, end, ...props }) => {
           yAxisKey: 'data'
         },
       },
-      {
-        label: `DIMA Histórico`,
+      /* {
+        label: `DIMA Anterior`,
         data: DIMA_historico,
         backgroundColor: colors_palette[2],
         borderColor: colors_palette[2],
@@ -50,10 +64,10 @@ export const ChartDIMA = ({ start, end, ...props }) => {
           xAxisKey: 'date',
           yAxisKey: 'value'
         },
-      },
+      }, */
       {
-        label: `VB ENRE`,
-        data: [{date:"01/2011", value:99.943556},{date:"12/2015", value:99.943556}],
+        label: `Valor Base ENRE (VB)`,
+        data: [{ date: "01/2011", value: 99.943556 }, { date: "12/2015", value: 99.943556 }],
         backgroundColor: colors_palette[3],
         borderColor: colors_palette[3],
         borderWidth: 0.9,
@@ -65,8 +79,8 @@ export const ChartDIMA = ({ start, end, ...props }) => {
         },
       },
       {
-        label: `VM ENRE`,
-        data: [{date:"01/2011", value:99.977627},{date:"12/2015", value:99.977627}],
+        label: `Valor Máximo ENRE (VM)`,
+        data: [{ date: "01/2011", value: 99.977627 }, { date: "12/2015", value: 99.977627 }],
         backgroundColor: colors_palette[4],
         borderColor: colors_palette[4],
         borderWidth: 0.9,
@@ -85,6 +99,14 @@ export const ChartDIMA = ({ start, end, ...props }) => {
     layout: { padding: 0 },
     maintainAspectRatio: false,
     plugins: {
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          footer: (ttItem) => {
+            return `${ttItem[0]?.raw?.data?.toFixed(6) || ""}`;
+          }
+        }
+      },
       legend: {
         position: 'top',
         fontSize: 2,
@@ -96,6 +118,7 @@ export const ChartDIMA = ({ start, end, ...props }) => {
 
       },
     },
+
     parsing: {
       xAxisKey: 'date',
     },
@@ -109,6 +132,8 @@ export const ChartDIMA = ({ start, end, ...props }) => {
           tooltipFormat: settings.tooltipFormat,
           displayFormats: settings.displayFormats
         },
+        min: start,
+        max: end
       },
     },
   };
@@ -137,6 +162,8 @@ export const ChartDIMA = ({ start, end, ...props }) => {
               style={{ fontSize: "1em" }}
             >
               {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE LA CONCECIONARIA (DIMA)`}
+              {loading && <LinearProgress />}
+
             </Typography>
           </Grid>
           <Grid item>
@@ -168,6 +195,8 @@ export const ChartDIMA = ({ start, end, ...props }) => {
           onClick={onClick}
         />
       </Box>
+
+      <CollapseDIMADetailTable />
     </Card>
   );
 };

@@ -25,6 +25,7 @@ import Settings from './pages/settings';
 import Mapa from './pages/mapa';
 import Upload from './pages/upload';
 import ReportesDIMA from './pages/reportes-dima';
+import Indisponibilidades from './pages/indisponibilidades';
 /* import SchedulerPersonas from './pages/scheduler-personas'; */
 
 function App() {
@@ -61,7 +62,6 @@ function App() {
             {/* Inicio */}
             <Route path="/" element={<Private Component={Mapa} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
 
-
             {/* Users */}
             <Route path="/users-account" element={<Private Component={UsersAccount} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
             <Route path="/users-create" element={<Private Component={UsersCreate} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
@@ -75,17 +75,17 @@ function App() {
             {/* Settings*/}
             <Route path="/settings" element={<Private Component={Settings} user={user} roles={["Administrador"]} />} />
 
-            {/* SchedulerPersonas*/}
-            {/*             <Route path="/scheduler-personas" element={<Private Component={SchedulerPersonas} user={user} roles={["Administrador"]} />} /> */}
+            {/* Indisponibilidades*/}
+            <Route path="/indisponibilidades" element={<Private Component={Indisponibilidades} user={user} roles={["Administrador"]} />} />
 
             {/* Mapa*/}
             <Route path="/mapa" element={<Private Component={Mapa} user={user} roles={["Administrador"]} />} />
 
-             {/* Actualiar*/}
-             <Route path="/upload" element={<Private Component={Upload} user={user} roles={["Administrador"]} />} />
+            {/* Actualiar*/}
+            <Route path="/upload" element={<Private Component={Upload} user={user} roles={["Administrador"]} />} />
 
-             {/* Reportes*/}
-             <Route path="/reportes/DIMA" element={<Private Component={ReportesDIMA} user={user} roles={["Administrador"]} />} />
+            {/* Reportes*/}
+            <Route path="/reportes/DIMA" element={<Private Component={ReportesDIMA} user={user} roles={["Administrador"]} />} />
 
 
           </Routes>

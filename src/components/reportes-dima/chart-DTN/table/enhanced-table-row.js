@@ -52,6 +52,9 @@ export default function EnhancedTableRow({ line, ...rest }) {
                     {line.tension}
                 </StyledTableCell>
                 <StyledTableCell >
+                    {line.potencia_1}
+                </StyledTableCell>
+                <StyledTableCell >
                     {line.horas_indisponibles_ano_movil !== 0 ? (line.horas_indisponibles_ano_movil).toFixed(2) : "-"}
                 </StyledTableCell>
                 <StyledTableCell >
@@ -123,7 +126,7 @@ export default function EnhancedTableRow({ line, ...rest }) {
                                                         {indisponibilidad.duracion_ano_movil?.toFixed(2)}
                                                     </StyledTableCell>
                                                     <StyledTableCell align='right'>
-                                                        {indisponibilidad.ENS_value?.toFixed(2)}
+                                                        {indisponibilidad.Energ?.toFixed(2)}
                                                     </StyledTableCell>
                                                     <StyledTableCell>
                                                         {indisponibilidad.SALIDA ? format(new Date(indisponibilidad.SALIDA), 'dd/MM/yyyy HH:mm') : "-"}

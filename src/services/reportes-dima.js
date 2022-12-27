@@ -39,6 +39,13 @@ export function DCFValue({ start, end  }) {
     })
 }
 
+export function VPMValue({ start, end  }) {
+    let token = localStorage.getItem("token")
+    return instance.get(`reportes/DIMA/VPM-array?start=${start.toISOString()}&end=${end.toISOString()}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+}
+
 
 //--------------DETAIL TABLE--------------//
 export function DLFDetailTable({ year, month, order, orderBy }) {

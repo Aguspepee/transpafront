@@ -28,7 +28,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
 
     //Sort states and functions
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('horas_indisponibles_ano_movil');
+    const [orderBy, setOrderBy] = useState('ENS_total_ano_movil');
     const handleRequestSort = (event, property) => {
         // setLoading(true);
         const isAsc = orderBy === property && order === 'asc';
@@ -51,7 +51,6 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
         getData()
 
     }, [date, order, orderBy])
-    console.log(results)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -117,6 +116,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                                         Ubicación Técnica
                                     </TableSortLabel>
                                 </TableCell>
+
                                 <TableCell style={{ backgroundColor: "#F1F1F1" }}>
                                     <TableSortLabel
                                         active={orderBy === "tension"}
@@ -124,6 +124,15 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                                         onClick={createSortHandler("tension")}
                                     >
                                         Tensión
+                                    </TableSortLabel>
+                                </TableCell>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                    <TableSortLabel
+                                        active={orderBy === "tension"}
+                                        direction={orderBy === "tension" ? order : 'asc'}
+                                        onClick={createSortHandler("tension")}
+                                    >
+                                        Potencia
                                     </TableSortLabel>
                                 </TableCell>
                                 <TableCell style={{ backgroundColor: "#F1F1F1" }}>
@@ -137,9 +146,9 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                                 </TableCell>
                                 <TableCell style={{ backgroundColor: "#F1F1F1" }}>
                                     <TableSortLabel
-                                        active={orderBy === "horas_indisponibles_ano_movil"}
-                                        direction={orderBy === "horas_indisponibles_ano_movil" ? order : 'asc'}
-                                        onClick={createSortHandler("horas_indisponibles_ano_movil")}
+                                        active={orderBy === "ENS_total_ano_movil"}
+                                        direction={orderBy === "ENS_total_ano_movil" ? order : 'asc'}
+                                        onClick={createSortHandler("ENS_total_ano_movil")}
                                     >
                                         ENS AÑO MÓVIL
                                     </TableSortLabel>

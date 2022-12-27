@@ -13,7 +13,8 @@ import { ChartVPM } from '../components/reportes-dima/chart-VPM';
 function ReportesDIMA() {
   //const [results, setResults] = useState([])
   const [start, setStart] = useState(new Date(2011, 0, 1))
-  const [end, setEnd] = useState(new Date(2022, 11, 1))
+  //const [end, setEnd] = useState(new Date(2022, 10, 1))
+  const [end, setEnd] = useState(new Date())
 
   return (
     <>

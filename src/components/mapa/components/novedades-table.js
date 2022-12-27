@@ -11,30 +11,30 @@ import TableRow, { tableRowClasses } from "@mui/material/TableRow";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-     // backgroundColor: theme.palette.common.black,
-     // color: theme.palette.common.white
+        // backgroundColor: theme.palette.common.black,
+        // color: theme.palette.common.white
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 11,
-      padding: "0px 0px 0px 15px"
+        fontSize: 11,
+        padding: "0px 0px 0px 15px"
     }
-  }));
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+}));
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
-      height: "10px"
+        height: "10px"
     },
     "&:nth-of-type(odd)": {
-     // backgroundColor: theme.palette.action.hover
+        // backgroundColor: theme.palette.action.hover
     },
     // hide last border
     "&:last-child td, &:last-child th": {
-      border: 0,
-      height: 1
+        border: 0,
+        height: 1
     }
-  }));
+}));
 
 export default function NovedadesTable(props) {
-    const { search,  flyToPosition, ...other } = props;
+    const { search, flyToPosition, ...other } = props;
     const [novedades, setNovedades] = useState([])
     useEffect(() => {
         const getNovedades = async () => {
@@ -47,78 +47,78 @@ export default function NovedadesTable(props) {
     )
     return (
         <>
-                <Paper sx={{ overflowX: "auto", width: "100%", height: `110px` }}>
-                    <Table size='small' stickyHeader>
-                        <TableHead>
-                            <TableRow >
-                                <TableCell>
+            <Paper sx={{ overflowX: "auto", width: "100%", height: `110px` }}>
+                <Table size='small' stickyHeader>
+                    <TableHead>
+                        <TableRow >
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >OT</Typography>
-                                </TableCell>
-                                <TableCell>
+                            </TableCell>
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >FECHA</Typography>
-                                </TableCell>
-                                <TableCell>
+                            </TableCell>
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >EQUIPO</Typography>
-                                </TableCell>
-                                <TableCell>
+                            </TableCell>
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >DENOMINACIÓN</Typography>
-                                </TableCell>
-                                <TableCell>
+                            </TableCell>
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >CÓDIGO</Typography>
-                                </TableCell>
-                                <TableCell>
+                            </TableCell>
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >DETALLE</Typography>
-                                </TableCell>
-                                <TableCell>
+                            </TableCell>
+                            <TableCell>
                                 <Typography variant="h5" style={{ fontSize: '0.9em' }} >ESTADO</Typography>
-                                </TableCell>
-                                <TableCell>
-                                   
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {novedades.map((novedad, index) => {
+                            </TableCell>
+                            <TableCell>
 
-                                return (
-                                    <StyledTableRow  key={index}>
-                                        <StyledTableCell>
-                                            {novedad.orden}
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {novedades.map((novedad, index) => {
 
-                                        </StyledTableCell >
-                                        <StyledTableCell>
-                                            {novedad.fecha}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            {novedad.equipo}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            {novedad.denominacion}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                           {novedad.codigo_valorac}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                             {novedad.codif_txt_cod}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            <EstadoChip estado={novedad.valor_medido}/>
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            <Tooltip title="Ir al punto">
-                                                <IconButton size='small' sx={{ fontSize: "15px", padding: '3px 3px 3px 3px' }} onClick={() => flyToPosition([-novedad.piquete[0]?.latitud, -novedad.piquete[0]?.longitud])}>
-                                                    <NearMeIcon sx={{ fontSize: "15px" }} />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </StyledTableCell>
-                                    </StyledTableRow>
-                                )
-                            })
-                            }
-                        </TableBody>
+                            return (
+                                <StyledTableRow key={index}>
+                                    <StyledTableCell>
+                                        {novedad.orden}
 
-                    </Table>
-                </Paper>
+                                    </StyledTableCell >
+                                    <StyledTableCell>
+                                        {novedad.fecha}
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        {novedad.equipo}
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        {novedad.denominacion}
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        {novedad.codigo_valorac}
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        {novedad.codif_txt_cod}
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        <EstadoChip estado={novedad.valor_medido} />
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        <Tooltip title="Ir al punto">
+                                            <IconButton size='small' sx={{ fontSize: "15px", padding: '3px 3px 3px 3px' }} onClick={() => flyToPosition([-novedad.piquete[0]?.latitud, -novedad.piquete[0]?.longitud])}>
+                                                <NearMeIcon sx={{ fontSize: "15px" }} />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            )
+                        })
+                        }
+                    </TableBody>
+
+                </Table>
+            </Paper>
 
 
         </>

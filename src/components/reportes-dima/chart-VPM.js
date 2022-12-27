@@ -1,6 +1,7 @@
 import { Line, getElementAtEvent } from 'react-chartjs-2';
 import { useRef } from 'react';
-import { Box, Grid, Card, IconButton, Divider, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Box, Grid, Card, IconButton, Divider, Typography, Collapse, LinearProgress } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
@@ -9,79 +10,105 @@ import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls';
 import { VOn } from '../../utils/list';
-
+import { VPMValue } from '../../services/reportes-dima';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 Chart.register(...registerables);
 
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 export const ChartVPM = ({ start, end, ...props }) => {
   const [results, setResults] = useState([])
+  const [expanded, setExpanded] = useState(false);
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
+  const [loading, setLoading] = useState(true)
   const onClick = (event) => {
     console.log(getElementAtEvent(chartRef.current, event));
   }
 
-   useEffect(() => {
-    const getData = async () => {
-      //const res = await DIMA({ start: start, end: end })
-      //setResults(res.data)
+  useEffect(() => {
+    setLoading(true)
+    try {
+      if (expanded) {
+        const getData = async () => {
+          const res = await VPMValue({ start: start, end: end })
+          setResults(res.data)
+          setLoading(false)
+        }
+        getData()
+      }
+    } catch (error) {
+      console.log(error)
     }
-    getData()
-  }, [])
+  }, [expanded])
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+    setResults([])
+  };
 
   const data = {
     datasets:
       [
-/*         {
-        label: `DIMA`,
-        data: results,
-        backgroundColor: colors_palette[1],
-        borderColor: colors_palette[1],
-        fill: false,
-        parsing: {
-          yAxisKey: 'data'
+        {
+          label: `Valor Promedio Móvil (VPM)`,
+          data: results,
+          backgroundColor: colors_palette[1],
+          borderColor: colors_palette[1],
+          fill: false,
+          parsing: {
+            yAxisKey: 'data'
+          },
         },
-      }, */
-      {
-        label: `VOn`,
-        data: VOn,
-        borderWidth: 0.9,
-        backgroundColor: colors_palette[2],
-        borderColor: colors_palette[2],
-        fill: false,
-        pointStyle: 'triangle',
-        parsing: {
-          xAxisKey: 'date',
-          yAxisKey: 'value'
+        {
+          label: `Valor Objetivo año n (VOn)`,
+          data: VOn,
+          borderWidth: 0.9,
+          backgroundColor: colors_palette[2],
+          borderColor: colors_palette[2],
+          fill: false,
+          pointStyle: 'triangle',
+          parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'value'
+          },
         },
-      },
-      {
-        label: `VB ENRE`,
-        data: [{date:"01/2011", value:99.943556},{date:"12/2015", value:99.943556}],
-        backgroundColor: colors_palette[3],
-        borderColor: colors_palette[3],
-        borderWidth: 0.9,
-        fill: false,
-        pointStyle: 'triangle',
-        parsing: {
-          xAxisKey: 'date',
-          yAxisKey: 'value'
+        {
+          label: `Valor Base ENRE (VB)`,
+          data: [{ date: "01/2011", value: 99.943556 }, { date: "12/2015", value: 99.943556 }],
+          backgroundColor: colors_palette[3],
+          borderColor: colors_palette[3],
+          borderWidth: 0.9,
+          fill: false,
+          pointStyle: 'triangle',
+          parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'value'
+          },
         },
-      },
-      {
-        label: `VM ENRE`,
-        data: [{date:"01/2011", value:99.977627},{date:"12/2015", value:99.977627}],
-        backgroundColor: colors_palette[4],
-        borderColor: colors_palette[4],
-        borderWidth: 0.9,
-        fill: false,
-        pointStyle: 'triangle',
-        parsing: {
-          xAxisKey: 'date',
-          yAxisKey: 'value'
+        {
+          label: `Valor Máximo ENRE (VM)`,
+          data: [{ date: "01/2011", value: 99.977627 }, { date: "12/2015", value: 99.977627 }],
+          backgroundColor: colors_palette[4],
+          borderColor: colors_palette[4],
+          borderWidth: 0.9,
+          fill: false,
+          pointStyle: 'triangle',
+          parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'value'
+          },
         },
-      },
-    ]
+      ]
 
   };
   const options = {
@@ -116,6 +143,8 @@ export const ChartVPM = ({ start, end, ...props }) => {
           tooltipFormat: settings.tooltipFormat,
           displayFormats: settings.displayFormats
         },
+        min: start,
+        max: end
       },
     },
   };
@@ -130,7 +159,7 @@ export const ChartVPM = ({ start, end, ...props }) => {
           flexWrap: 'wrap',
           m: -1
         }}
-        style={{ padding: "1em 1em 0.3em 1.4em" }}
+        style={{ padding: "1em 1em 1em 1.4em" }}
       >
         <Grid
           container
@@ -139,42 +168,54 @@ export const ChartVPM = ({ start, end, ...props }) => {
         >
           <Grid item style={{ width: '85%' }}>
             <Typography
-              sx={{ m: 1 }}
+              sx={{ m: 1, pt: 0.8 }}
               variant="h6"
               style={{ fontSize: "1em" }}
             >
               {`VALOR PROMEDIO MÓVILO (VPM)`}
+              {loading && expanded && <LinearProgress />}
             </Typography>
           </Grid>
           <Grid item>
             <Box sx={{ m: 1 }}>
-              <IconButton
+              {/* <IconButton
                 //color=""
                 variant="contained"
                 size='small'
                 onClick={() => { genericoXLS({ data: data.datasets }) }}
               >
                 <FileDownloadIcon fontSize='inerhit' />
-              </IconButton>
+              </IconButton> */}
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+                size="small"
+              >
+                <ExpandMoreIcon size="small" />
+              </ExpandMore>
             </Box>
           </Grid>
         </Grid>
       </Box>
-      <Divider />
-      <Box
-        sx={{
-          height: 450,
-          position: 'relative',
-          padding: '0.5em 1em 1em 1em'
-        }}
-      >
-        <Line
-          ref={chartRef}
-          data={data}
-          options={options}
-          onClick={onClick}
-        />
-      </Box>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Divider />
+        <Box
+          sx={{
+            height: 450,
+            position: 'relative',
+            padding: '0.5em 1em 1em 1em'
+          }}
+        >
+          <Line
+            ref={chartRef}
+            data={data}
+            options={options}
+            onClick={onClick}
+          />
+        </Box>
+      </Collapse>
     </Card>
   );
 };

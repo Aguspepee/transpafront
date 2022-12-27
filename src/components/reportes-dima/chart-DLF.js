@@ -1,7 +1,7 @@
 import { Line, getElementAtEvent } from 'react-chartjs-2';
 import { useRef } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse, Tooltip } from '@mui/material';
+import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse, Tooltip, LinearProgress } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
@@ -12,28 +12,54 @@ import { genericoXLS } from '../../utils/exports/generico-xls'
 import { DLFValue } from '../../services/reportes-dima';
 import CollapseDLFDetailTable from './chart-DLF/chart-DLF-detail-table';
 import HelpIcon from '@mui/icons-material/Help';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 Chart.register(...registerables);
 
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 export const ChartDLF = ({ start, end, ...props }) => {
   const [results, setResults] = useState([])
+  const [expanded, setExpanded] = useState(false);
   const settings = segmentacionSettings("mensual")
   const chartRef = useRef();
+  const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState({ year: 2022, month: 12 })
 
   const onClick = (event) => {
     const index = getElementAtEvent(chartRef.current, event)[0]?.index;
     const date = results[index]?.date
     setSelectedDate({ year: date?.split("/")[1], month: date?.split("/")[0] })
-
   }
+  
   useEffect(() => {
-    const getData = async () => {
-      const res = await DLFValue({ start: start, end: end })
-      setResults(res.data)
+    setLoading(true)
+    try {
+    if (expanded) {
+      const getData = async () => {
+        const res = await DLFValue({ start: start, end: end })
+        setResults(res.data)
+        setLoading(false)
+      }
+      getData()
     }
-    getData()
-  }, [])
+  } catch (error) {
+    console.log(error)
+  }
+  }, [expanded])
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+    setResults([])
+  };
 
   const data = {
     datasets:
@@ -78,6 +104,8 @@ export const ChartDLF = ({ start, end, ...props }) => {
           tooltipFormat: settings.tooltipFormat,
           displayFormats: settings.displayFormats
         },
+        min: start,
+        max: end
       },
     },
   };
@@ -92,7 +120,7 @@ export const ChartDLF = ({ start, end, ...props }) => {
           flexWrap: 'wrap',
           m: -1
         }}
-        style={{ padding: "1em 1em 0.3em 1.4em" }}
+        style={{ padding: "1em 1em 1em 1.4em" }}
       >
         <Grid
           container
@@ -101,58 +129,68 @@ export const ChartDLF = ({ start, end, ...props }) => {
         >
           <Grid item style={{ width: '85%' }}>
             <Typography
-              sx={{ m: 1 }}
+              sx={{ m: 1, pt:0.8 }}
               variant="h6"
               style={{ fontSize: "1em" }}
             >
               {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE SALIDAS DE LÍNEAS FORZADAS (DLF)`}
-              <Tooltip title={
+              {loading && expanded && <LinearProgress />}
+{/*               <Tooltip title={
                 `La disponibilidad media anual móvil de salidas de líneas forzadas (DLF) para un mes "i" se 
                 calcula como uno menos el cociente entre la sumatoria del producto entre las horas forzadas 
                 indisponibles de la línea “j” en el año móvil por la longitud de la línea “j” (l jif ) y la sumatoria 
                 de las horas de cada mes del año móvil (H j) por la longitud total de las líneas en cada mes 
                 (L j).`}
->
+              >
                 <IconButton
-                  variant="contained"
+                //variant="contained"
                   size='small'
                 >
                   <HelpIcon fontSize='inerhit' />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
             </Typography>
 
           </Grid>
           <Grid item>
             <Box sx={{ m: 1 }}>
-              <IconButton
-                //color=""
-                variant="contained"
+              {/* <IconButton
                 size='small'
                 onClick={() => { genericoXLS({ data: data.datasets }) }}
               >
-                <FileDownloadIcon fontSize='inerhit' />
-              </IconButton>
+                <FileDownloadIcon size='small'/>
+              </IconButton> */}
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+                size="small"
+              >
+                <ExpandMoreIcon size="small" />
+              </ExpandMore>
             </Box>
           </Grid>
         </Grid>
       </Box>
-      <Divider />
-      <Box
-        sx={{
-          height: 450,
-          position: 'relative',
-          padding: '0.5em 1em 1em 1em'
-        }}
-      >
-        <Line
-          ref={chartRef}
-          data={data}
-          options={options}
-          onClick={onClick}
-        />
-      </Box>
-      <CollapseDLFDetailTable date={selectedDate} />
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Divider />
+        <Box
+          sx={{
+            height: 450,
+            position: 'relative',
+            padding: '0.5em 1em 1em 1em'
+          }}
+        >
+          <Line
+            ref={chartRef}
+            data={data}
+            options={options}
+            onClick={onClick}
+          />
+        </Box>
+        <CollapseDLFDetailTable date={selectedDate} />
+      </Collapse>
     </Card>
   );
 };
