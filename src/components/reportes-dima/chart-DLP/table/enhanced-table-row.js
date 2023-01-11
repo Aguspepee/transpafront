@@ -14,7 +14,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontSize: 11,
         padding: "0px 17px 0px 17px",
         borderBottom: "0.1px solid #F5F5F5",
-        //bordetTop:4
+    }
+}));
+
+const StyledSubTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 10,
+        padding: "0px 17px 0px 17px",
+        borderBottom: "0.1px solid #F5F5F5",
     }
 }));
 
@@ -48,14 +55,14 @@ export default function EnhancedTableRow({ line, ...rest }) {
                 <StyledTableCell >
                     {line.codigo}
                 </StyledTableCell>
-                <StyledTableCell >
-                    {line.tension}
+                <StyledTableCell align='right'>
+                    {`${line.tension} kV`}
                 </StyledTableCell>
-                <StyledTableCell >
-                    {line.horas_indisponibles_ano_movil !== 0 ? (line.horas_indisponibles_ano_movil).toFixed(2) : "-"}
+                <StyledTableCell align='right'>
+                    {line.horas_indisponibles_ano_movil !== 0 ? `${(line.horas_indisponibles_ano_movil).toFixed(2)} h` : "-"}
                 </StyledTableCell>
-                <StyledTableCell >
-                    {line.longitud_oficial}
+                <StyledTableCell align='right'>
+                    {`${line.longitud_oficial} km`}
                 </StyledTableCell>
                 <StyledTableCell >
                     {line.IDEQ}
@@ -73,12 +80,12 @@ export default function EnhancedTableRow({ line, ...rest }) {
             <TableRow >
                 <TableCell style={{ padding: "0px 0px 0px 0px" }} colSpan={12}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box style={{ paddingLeft: "0px" }}>
+                        <Box style={{ padding:"2em 2em 2em 2em" }}>
                             <Table size='small'>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell style={{ backgroundColor: "#F7F7F7" }}>
-                                            DETALLE
+                                            Detalle de la Indisponibilidad
                                         </TableCell >
                                         <TableCell align='right' style={{ backgroundColor: "#F7F7F7" }}>
                                             Causa
@@ -90,10 +97,10 @@ export default function EnhancedTableRow({ line, ...rest }) {
                                             Duración
                                         </TableCell>
                                         <TableCell style={{ backgroundColor: "#F7F7F7" }}>
-                                            Salida
+                                            Salida de Servicio
                                         </TableCell>
                                         <TableCell style={{ backgroundColor: "#F7F7F7" }}>
-                                            Entrada
+                                            Entrada de Servicio
                                         </TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -104,24 +111,25 @@ export default function EnhancedTableRow({ line, ...rest }) {
 
                                             return (
                                                 <StyledTableRow key={index} >
-                                                    <StyledTableCell>
+                                                    <StyledSubTableCell>
                                                         {indisponibilidad.OBSERVACIONES}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align='right'>
-                                                        {indisponibilidad.Causa}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align='right'>
-                                                        {indisponibilidad.Cl}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align='right'>
-                                                        {indisponibilidad.duracion_ano_movil?.toFixed(2)}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell>
+                                                    </StyledSubTableCell>
+                                                    <StyledSubTableCell align='right'>
+                                                        {indisponibilidad.Causa === "P" && "Programada"}
+                                                        {indisponibilidad.Causa !== "P" && (indisponibilidad.causa_detalle[0] ? indisponibilidad.causa_detalle[0]?.detalle || indisponibilidad.Causa : indisponibilidad.Causa)}
+                                                    </StyledSubTableCell>
+                                                    <StyledSubTableCell align='right'>
+                                                        {indisponibilidad.clase_detalle[0] ? indisponibilidad.clase_detalle[0]?.detalle || "S/D" : "S/D"}
+                                                    </StyledSubTableCell>
+                                                    <StyledSubTableCell align='right'>
+                                                    {`${indisponibilidad.duracion_ano_movil?.toFixed(2)} h`}
+                                                    </StyledSubTableCell>
+                                                    <StyledSubTableCell>
                                                         {indisponibilidad.SALIDA ? format(new Date(indisponibilidad.SALIDA), 'dd/MM/yyyy HH:mm') : "-"}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell>
+                                                    </StyledSubTableCell>
+                                                    <StyledSubTableCell>
                                                         {indisponibilidad.ENTRADA ? format(new Date(indisponibilidad.ENTRADA), 'dd/MM/yyyy HH:mm') : "-"}
-                                                    </StyledTableCell>
+                                                    </StyledSubTableCell>
                                                 </StyledTableRow>
                                             )
                                         })

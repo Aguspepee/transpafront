@@ -27,11 +27,11 @@ function ReportesDIMA() {
           }}
         >
           <Container maxWidth={false}>
-            <Typography variant="subtitle1" gutterBottom>
+{/*             <Typography variant="subtitle1" gutterBottom>
               ANEXO I a Resolución ENRE N° 552/2016
-            </Typography>
+            </Typography> */}
             <Typography variant="h5" gutterBottom>
-              Determinación de Índices de Cálidad
+              Índices de Cálidad según Resolución ENRE N° 552/2016
             </Typography>
             <Grid
               container

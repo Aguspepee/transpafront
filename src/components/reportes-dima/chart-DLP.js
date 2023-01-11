@@ -65,8 +65,8 @@ export const ChartDLP = ({ start, end, ...props }) => {
       [{
         label: `DLP`,
         data: results,
-        backgroundColor: colors_palette[4],
-        borderColor: colors_palette[4],
+        backgroundColor: colors_palette[7],
+        borderColor: colors_palette[7],
         fill: false,
         parsing: {
           yAxisKey: 'data'
@@ -80,6 +80,21 @@ export const ChartDLP = ({ start, end, ...props }) => {
     layout: { padding: 0 },
     maintainAspectRatio: false,
     plugins: {
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context) => {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(6);
+            }
+            return label;
+          }
+        }
+      },
       legend: {
         position: 'top',
         fontSize: 2,

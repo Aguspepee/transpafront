@@ -78,7 +78,7 @@ export default function CollapseDCFDetailTable({ date, ...rest }) {
                             variant="h6"
                             style={{ fontSize: "0.8em" , padding:"5px 0px 5px 23px"}}
                         >
-                            {`DETALLE POR PUNTO DE CONEXIÓN ${date.month||"-"}/${date.year||"-"}`}
+                            {`DETALLE POR PUNTO DE CONEXIÓN AL ${date.month||"-"}/${date.year||"-"}`}
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -114,7 +114,7 @@ export default function CollapseDCFDetailTable({ date, ...rest }) {
                                         Código
                                     </TableSortLabel>
                                 </TableCell>
-                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}  align='right'>
                                     <TableSortLabel
                                         active={orderBy === "tension"}
                                         direction={orderBy === "tension" ? order : 'asc'}
@@ -123,7 +123,7 @@ export default function CollapseDCFDetailTable({ date, ...rest }) {
                                         Tensión
                                     </TableSortLabel>
                                 </TableCell>
-                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}  align='right'>
                                     <TableSortLabel
                                         active={orderBy === "horas_indisponibles_ano_movil"}
                                         direction={orderBy === "horas_indisponibles_ano_movil" ? order : 'asc'}
@@ -132,7 +132,7 @@ export default function CollapseDCFDetailTable({ date, ...rest }) {
                                         Horas Indisponibles
                                     </TableSortLabel>
                                 </TableCell>
-                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}  align='right'>
                                     <TableSortLabel
                                         active={orderBy === "longitud_oficial"}
                                         direction={orderBy === "longitud_oficial" ? order : 'asc'}

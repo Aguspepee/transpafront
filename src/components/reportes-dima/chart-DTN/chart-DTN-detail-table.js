@@ -51,6 +51,8 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
         getData()
 
     }, [date, order, orderBy])
+    
+    console.log(results)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -80,7 +82,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                             variant="h6"
                             style={{ fontSize: "0.8em" , padding:"5px 0px 5px 23px"}}
                         >
-                            {`DETALLE POR TRANSFORMADOR ${date.month||"-"}/${date.year||"-"}`}
+                            {`DETALLE POR TRANSFORMADOR AL ${date.month||"-"}/${date.year||"-"}`}
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -117,7 +119,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                                     </TableSortLabel>
                                 </TableCell>
 
-                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}  align='right'>
                                     <TableSortLabel
                                         active={orderBy === "tension"}
                                         direction={orderBy === "tension" ? order : 'asc'}
@@ -126,7 +128,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                                         Tensión
                                     </TableSortLabel>
                                 </TableCell>
-                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}  align='right'>
                                     <TableSortLabel
                                         active={orderBy === "tension"}
                                         direction={orderBy === "tension" ? order : 'asc'}
@@ -135,7 +137,7 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
                                         Potencia
                                     </TableSortLabel>
                                 </TableCell>
-                                <TableCell style={{ backgroundColor: "#F1F1F1" }}>
+                                <TableCell style={{ backgroundColor: "#F1F1F1" }}  align='right'>
                                     <TableSortLabel
                                         active={orderBy === "horas_indisponibles_ano_movil"}
                                         direction={orderBy === "horas_indisponibles_ano_movil" ? order : 'asc'}

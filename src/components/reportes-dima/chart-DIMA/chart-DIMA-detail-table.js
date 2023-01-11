@@ -141,7 +141,7 @@ export default function CollapseDIMADetailTable({ ...rest }) {
                                     Calculado
                                 </TableCell>
                                 <TableCell style={{ backgroundColor: "#F1F1F1" }} align='right'>
-                                    Error
+                                    Discrepancia
                                 </TableCell>
                             </TableRow>
                         </TableHead>

@@ -102,8 +102,15 @@ export const ChartDIMA = ({ start, end, ...props }) => {
       tooltip: {
         enabled: true,
         callbacks: {
-          footer: (ttItem) => {
-            return `${ttItem[0]?.raw?.data?.toFixed(6) || ""}`;
+          label: (context) => {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(6);
+            }
+            return label;
           }
         }
       },
@@ -161,7 +168,7 @@ export const ChartDIMA = ({ start, end, ...props }) => {
               variant="h6"
               style={{ fontSize: "1em" }}
             >
-              {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE LA CONCECIONARIA (DIMA)`}
+              {`DISPONIBILIDAD MEDIA ANUAL MÓVIL (DIMA)`}
               {loading && <LinearProgress />}
 
             </Typography>

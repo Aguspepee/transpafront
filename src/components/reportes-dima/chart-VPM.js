@@ -62,8 +62,8 @@ export const ChartVPM = ({ start, end, ...props }) => {
         {
           label: `Valor Promedio Móvil (VPM)`,
           data: results,
-          backgroundColor: colors_palette[1],
-          borderColor: colors_palette[1],
+          backgroundColor: colors_palette[6],
+          borderColor: colors_palette[6],
           fill: false,
           parsing: {
             yAxisKey: 'data'
@@ -73,8 +73,8 @@ export const ChartVPM = ({ start, end, ...props }) => {
           label: `Valor Objetivo año n (VOn)`,
           data: VOn,
           borderWidth: 0.9,
-          backgroundColor: colors_palette[2],
-          borderColor: colors_palette[2],
+          backgroundColor: colors_palette[7],
+          borderColor: colors_palette[7],
           fill: false,
           pointStyle: 'triangle',
           parsing: {
@@ -85,8 +85,8 @@ export const ChartVPM = ({ start, end, ...props }) => {
         {
           label: `Valor Base ENRE (VB)`,
           data: [{ date: "01/2011", value: 99.943556 }, { date: "12/2015", value: 99.943556 }],
-          backgroundColor: colors_palette[3],
-          borderColor: colors_palette[3],
+          backgroundColor: colors_palette[8],
+          borderColor: colors_palette[8],
           borderWidth: 0.9,
           fill: false,
           pointStyle: 'triangle',
@@ -98,8 +98,8 @@ export const ChartVPM = ({ start, end, ...props }) => {
         {
           label: `Valor Máximo ENRE (VM)`,
           data: [{ date: "01/2011", value: 99.977627 }, { date: "12/2015", value: 99.977627 }],
-          backgroundColor: colors_palette[4],
-          borderColor: colors_palette[4],
+          backgroundColor: colors_palette[9],
+          borderColor: colors_palette[9],
           borderWidth: 0.9,
           fill: false,
           pointStyle: 'triangle',
@@ -117,6 +117,21 @@ export const ChartVPM = ({ start, end, ...props }) => {
     layout: { padding: 0 },
     maintainAspectRatio: false,
     plugins: {
+       tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context) => {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(6);
+            }
+            return label;
+          }
+        }
+      },
       legend: {
         position: 'top',
         fontSize: 2,
@@ -172,7 +187,7 @@ export const ChartVPM = ({ start, end, ...props }) => {
               variant="h6"
               style={{ fontSize: "1em" }}
             >
-              {`VALOR PROMEDIO MÓVILO (VPM)`}
+              {`VALOR PROMEDIO MÓVIL (VPM)`}
               {loading && expanded && <LinearProgress />}
             </Typography>
           </Grid>

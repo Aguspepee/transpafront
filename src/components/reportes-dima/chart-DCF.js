@@ -7,11 +7,8 @@ import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
 import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { genericoXLS } from '../../utils/exports/generico-xls'
 import { DCFValue } from '../../services/reportes-dima';
 import CollapseDCFDetailTable from './chart-DCF/chart-DCF-detail-table';
-import HelpIcon from '@mui/icons-material/Help';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 Chart.register(...registerables);
 
@@ -82,6 +79,21 @@ export const ChartDCF = ({ start, end, ...props }) => {
     layout: { padding: 0 },
     maintainAspectRatio: false,
     plugins: {
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context) => {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(6);
+            }
+            return label;
+          }
+        }
+      },
       legend: {
         position: 'top',
         fontSize: 2,
@@ -135,34 +147,11 @@ export const ChartDCF = ({ start, end, ...props }) => {
               style={{ fontSize: "1em" }}
             >
               {`DISPONIBILIDAD MEDIA ANUAL MÓVIL DE CONEXIONES FORZADAS (DCF)`}
-               {loading && expanded && <LinearProgress />}
-              {/*  <Tooltip title={
-                `La disponibilidad media anual móvil de salidas de líneas forzadas (DCF) para un mes "i" se 
-                calcula como uno menos el cociente entre la sumatoria del producto entre las horas forzadas 
-                indisponibles de la línea “j” en el año móvil por la longitud de la línea “j” (l jif ) y la sumatoria 
-                de las horas de cada mes del año móvil (H j) por la longitud total de las líneas en cada mes 
-                (L j).`}
->
-                <IconButton
-                  variant="contained"
-                  size='small'
-                >
-                  <HelpIcon fontSize='inerhit' />
-                </IconButton>
-              </Tooltip> */}
+              {loading && expanded && <LinearProgress />}
             </Typography>
-
           </Grid>
           <Grid item>
             <Box sx={{ m: 1 }}>
-              {/* <IconButton
-                //color=""
-                variant="contained"
-                size='small'
-                onClick={() => { genericoXLS({ data: data.datasets }) }}
-              >
-                <FileDownloadIcon fontSize='inerhit' />
-              </IconButton> */}
               <ExpandMore
                 expand={expanded}
                 onClick={handleExpandClick}
