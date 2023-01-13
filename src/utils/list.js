@@ -7,8 +7,14 @@ export const subtipos_actividad = [
     "Subítem"
 ]
 export const area = [
-    "Inspección",
-    "Radiografía"
+    "Gerencia", 
+    "Ingeniería", 
+    "Protecciones", 
+    "Operaciones", 
+    "Zona Norte", 
+    "Zona Sur", 
+    "Zona Oeste", 
+    "Zona Austral"
 ]
 export const unidades_medida = [
     "Día",
@@ -44,7 +50,7 @@ export const dateArray = (init, finish) => {
 
     // Create an empty array to store the date objects
     const dateArray = [];
-    
+
     // Loop over the range of dates
     for (let d = init; d <= finish; d.setMonth(d.getMonth() + 1)) {
         // Create a new object for the current date with year and month properties
@@ -56,7 +62,7 @@ export const dateArray = (init, finish) => {
         // Add the date object to the array
         dateArray.push(dateObj);
     }
-   
+
     // Log the date array
     return (dateArray);
 }
@@ -369,6 +375,66 @@ export const VOn = [
     {
         "date": "1/2022",
         "value": 99.932654
+    },
+]
+
+export const VOI = [
+    {
+        "date": "1/2017",
+        "value": 99.926521
+    },
+    {
+        "date": "1/2018",
+        "value": 99.926521
+    },
+    {
+        "date": "1/2019",
+        "value": 99.926521
+    },
+    {
+        "date": "1/2020",
+        "value": 99.926521
+    },
+    {
+        "date": "1/2021",
+        "value": 99.926521
+    },
+    {
+        "date": "1/2022",
+        "value": 99.926521
+    },
+]
+
+export const Kn = [
+    {
+        "ano": 1,
+        "desde": new Date(2017, 1, 1), // 01/02/2017
+        "hasta": new Date(2018, 0, 31), // 31/01/2018
+        "K": 1
+    },
+    {
+        "ano": 2,
+        "desde": new Date(2018, 1, 1),
+        "hasta": new Date(2019, 0, 31),
+        "K": 1.05
+    },
+    {
+        "ano": 3,
+        "desde": new Date(2019, 1, 1),
+        "hasta": new Date(2020, 0, 31),
+        "K": 1.3
+    },
+    {
+        "ano": 4,
+        "desde": new Date(2020, 1, 1),
+        "hasta": new Date(2021, 0, 31),
+        "K": 1.6
+    },
+    {
+        "ano": 5,
+        "desde": new Date(2021, 1, 1),
+        "hasta": new Date(2022, 0, 31),
+        "K": 2
     },
 
 ]

@@ -8,6 +8,7 @@ import { ChartDTN } from '../components/reportes-dima/chart-DTN';
 import { ChartDCF } from '../components/reportes-dima/chart-DCF';
 import { dateArray } from '../utils/list';
 import { ChartVPM } from '../components/reportes-dima/chart-VPM';
+import { ChartFA } from '../components/reportes-dima/chart-FA';
 
 
 function ReportesDIMA() {
@@ -27,9 +28,6 @@ function ReportesDIMA() {
           }}
         >
           <Container maxWidth={false}>
-{/*             <Typography variant="subtitle1" gutterBottom>
-              ANEXO I a Resolución ENRE N° 552/2016
-            </Typography> */}
             <Typography variant="h5" gutterBottom>
               Índices de Cálidad según Resolución ENRE N° 552/2016
             </Typography>
@@ -98,6 +96,15 @@ function ReportesDIMA() {
                 xs={12}
               >
                 <ChartVPM start={start} end={end} />
+              </Grid>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                xl={12}
+                xs={12}
+              >
+                <ChartFA start={start} end={end} />
               </Grid>
             </Grid>
           </Container>

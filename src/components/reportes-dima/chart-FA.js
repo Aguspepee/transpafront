@@ -7,14 +7,9 @@ import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
 import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { genericoXLS } from '../../utils/exports/generico-xls';
 import { VOn } from '../../utils/list';
-import { VOI } from '../../utils/list';
-import { VPMValue } from '../../services/reportes-dima';
+import { FAValue } from '../../services/reportes-dima';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import zoomPlugin from "chartjs-plugin-zoom";
-Chart.register(zoomPlugin);
 Chart.register(...registerables);
 
 const ExpandMore = styled((props) => {
@@ -28,7 +23,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export const ChartVPM = ({ start, end, ...props }) => {
+export const ChartFA = ({ start, end, ...props }) => {
   const [results, setResults] = useState([])
   const [expanded, setExpanded] = useState(false);
   const settings = segmentacionSettings("mensual")
@@ -43,7 +38,7 @@ export const ChartVPM = ({ start, end, ...props }) => {
     try {
       if (expanded) {
         const getData = async () => {
-          const res = await VPMValue({ start: start, end: end })
+          const res = await FAValue({ start: start, end: end })
           setResults(res.data)
           setLoading(false)
         }
@@ -63,69 +58,16 @@ export const ChartVPM = ({ start, end, ...props }) => {
     datasets:
       [
         {
-          label: `Valor Promedio Móvil (VPM)`,
+          label: `Factor de Afectación (FA)`,
           data: results,
-          backgroundColor: colors_palette[9],
-          borderColor: colors_palette[9],
-
+          backgroundColor: colors_palette[6],
+          borderColor: colors_palette[6],
+          fill: false,
           parsing: {
             yAxisKey: 'data'
           },
-        },
-        {
-          label: `Valor Objetivo año n (VOn)`,
-          data: VOn,
-          borderWidth: 0.9,
-          backgroundColor: `${colors_palette[7] + "66"}`,
-          borderColor: colors_palette[7],
-          fill: false,
-          pointStyle: 'triangle',
-          parsing: {
-            xAxisKey: 'date',
-            yAxisKey: 'value'
-          },
-        },
-        {
-          label: `Valor Objetivo inicial (VOI)`,
-          data: VOI,
-          borderWidth: 0.9,
-          backgroundColor: `${colors_palette[7] + "66"}`,
-          borderColor: colors_palette[7],
-          fill: "-1",
-          pointStyle: 'triangle',
-          parsing: {
-            xAxisKey: 'date',
-            yAxisKey: 'value'
-          },
-        },
-        {
-          label: `Valor Base ENRE (VB)`,
-          data: [{ date: "01/2011", value: 99.943556 }, { date: "12/2015", value: 99.943556 }],
-          backgroundColor: colors_palette[8],
-          borderColor: colors_palette[8],
-          borderWidth: 0.9,
-          fill: false,
-          pointStyle: 'triangle',
-          parsing: {
-            xAxisKey: 'date',
-            yAxisKey: 'value'
-          },
-        },
-        {
-          label: `Valor Máximo ENRE (VM)`,
-          data: [{ date: "01/2011", value: 99.977627 }, { date: "12/2015", value: 99.977627 }],
-          backgroundColor: colors_palette[3],
-          borderColor: colors_palette[3],
-          borderWidth: 0.9,
-          fill: false,
-          pointStyle: 'triangle',
-          parsing: {
-            xAxisKey: 'date',
-            yAxisKey: 'value'
-          },
-        },
+        }
       ]
-
   };
   const options = {
     animation: true,
@@ -133,23 +75,6 @@ export const ChartVPM = ({ start, end, ...props }) => {
     layout: { padding: 0 },
     maintainAspectRatio: false,
     plugins: {
-      zoom: {
-        pan: {
-          enabled:true,
-          mode: 'x',
-        },
-        zoom: {
-          wheel: {
-            enabled: true
-          },
-          // drag:{
-          //   enabled:true
-          // },
-          mode: "x",
-          speed: 100
-        },
-       
-      },
       tooltip: {
         enabled: true,
         callbacks: {
@@ -194,16 +119,6 @@ export const ChartVPM = ({ start, end, ...props }) => {
         min: start,
         max: end
       },
-      /*       y: {
-              type: 'linear' ,
-              display: true,
-              position: 'left',
-            },
-            y1: {
-              type: 'linear' ,
-              display: true,
-              position: 'right',
-            }, */
     },
   };
 
@@ -230,7 +145,7 @@ export const ChartVPM = ({ start, end, ...props }) => {
               variant="h6"
               style={{ fontSize: "1em" }}
             >
-              {`VALOR PROMEDIO MÓVIL (VPM)`}
+              {`FACTOR DE AFECTACIÓN (FA)`}
               {loading && expanded && <LinearProgress />}
             </Typography>
           </Grid>

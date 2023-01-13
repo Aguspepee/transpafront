@@ -46,6 +46,13 @@ export function VPMValue({ start, end  }) {
     })
 }
 
+export function FAValue({ start, end  }) {
+    let token = localStorage.getItem("token")
+    return instance.get(`reportes/DIMA/FA-array?start=${start.toISOString()}&end=${end.toISOString()}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+}
+
 
 //--------------DETAIL TABLE--------------//
 export function DLFDetailTable({ year, month, order, orderBy }) {
