@@ -1,4 +1,4 @@
-import { Line, getElementAtEvent } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { useRef } from 'react';
 import { Box, Grid, Card, IconButton, Divider, Typography, LinearProgress } from '@mui/material';
 import 'chartjs-adapter-moment';
@@ -8,7 +8,6 @@ import { colors_palette } from "../../utils/colors-palette";
 import { segmentacionSettings } from "../../utils/segmentacion-settings";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { genericoXLS } from '../../utils/exports/generico-xls';
-import { DIMA_historico } from '../../utils/list';
 import { DIMA } from '../../services/reportes-dima';
 import CollapseDIMADetailTable from './chart-DIMA/chart-DIMA-detail-table';
 Chart.register(...registerables);

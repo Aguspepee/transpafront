@@ -95,14 +95,14 @@ function EnhancedTableRow({ handleConfirmDialogChange, handleNotifyChange, colum
                     /> 
                 </StyledTableCell>
                 <StyledTableCell padding='none' style={{ backgroundColor: open ? "rgba(80, 72, 229, 0.12)" : "", fontSize: '7pt', }}>
-                     <IconButton
+                   {/*   <IconButton
                         aria-label="expand row"
                         size="small"
                         onClick={() => setOpen(!open)}
                         sx={{ width: "25px", height: "25px", fontSize: '15pt' }}
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton> 
+                    </IconButton>  */}
                 </StyledTableCell>
                 {columns.map((column) => {
                     return (
@@ -146,14 +146,6 @@ function EnhancedTableRow({ handleConfirmDialogChange, handleNotifyChange, colum
                 })}
                 <StyledTableCell align={'right'} style={{ backgroundColor: open ? "rgba(80, 72, 229, 0.12)" : "", fontSize: '8pt' }}>
                     <Stack direction="row" spacing={0}>
-
-                        <IconButton sx={{ width: "25px", height: "25px", fontSize: '12pt' }} onClick={() => {
-                            //  indisponibilidadPDF(indisponibilidad)
-                        }}>
-                            <Tooltip title="Descargar Remito">
-                                <DownloadIcon fontSize="inherit" />
-                            </Tooltip>
-                        </IconButton>
                         <IconButton 
                         sx={{ width: "25px", height: "25px", fontSize: '12pt' }} 
                         onClick={() => {
