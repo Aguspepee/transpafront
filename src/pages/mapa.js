@@ -12,8 +12,9 @@ import AnalisisCard from '../components/mapa/analisis-card';
 
 function Mapa() {
   const [data, setData] = useState([])
-  const [search, setSearch] = useState({reparadas:false, historico:false})
+  const [search, setSearch] = useState({ reparadas: false, historico: false })
   const [map, setMap] = useState(null);
+  const [box, setBox] = useState([])
 
   const handleSetMap = (value) => {
     setMap(value)
@@ -21,6 +22,11 @@ function Mapa() {
 
   const flyToPosition = (position) => {
     map.flyTo(position, 16)
+
+  }
+
+  const panToPosition = (box) => {
+    map.fitBounds(box)
 
   }
 
@@ -32,6 +38,15 @@ function Mapa() {
     async function getList() {
       try {
         const res = await lineasNovedadesGet({ search })
+
+        //Obtiene maxima y minima latitud y longitud:
+        const top = -res.data.reduce((a, b) => Math.max(a, +b.latitud), 0)
+        const bottom = -res.data.reduce((a, b) => Math.min(a, +b.latitud), 90)
+        const left = -res.data.reduce((a, b) => Math.min(a, +b.longitud), 90)
+        const right = -res.data.reduce((a, b) => Math.max(a, +b.longitud), 0)
+        setBox([[left, top], [right, bottom]])
+        console.log([[left, top], [right, bottom]])
+        panToPosition([[top, left], [bottom, right]])
         setData(res.data)
       } catch (error) {
         console.log(error)
@@ -121,7 +136,7 @@ function Mapa() {
               xl={12}
               xs={12}
             >
-              <NovedadesCard search={search} handleSearchChange={handleSearchChange} flyToPosition={flyToPosition}/>
+              <NovedadesCard search={search} handleSearchChange={handleSearchChange} flyToPosition={flyToPosition} />
             </Grid>
           </Grid>
         </Box>
