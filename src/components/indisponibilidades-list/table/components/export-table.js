@@ -216,7 +216,6 @@ export default function ExportTable({ handleReload, handleConfirmDialogChange, h
                             //defaultValue={[columns[3]]}
                             onChange={(event, newValues) => {
                                 setCampos(newValues)
-                                console.log(newValues)
                             }}
                             filterSelectedOptions
                             renderInput={(params) => (

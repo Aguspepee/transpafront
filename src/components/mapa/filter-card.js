@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css'
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ColorToggleButton from './components/toggle-button';
 import SwitchLabels from './components/switch-labels';
 import SelectNovedad from './components/select-novedad';
 
@@ -29,7 +28,7 @@ function FilterCard({ search, handleSearchChange, ...props }) {
 
     return (
         <Card>
-            <Box sx={{
+            <Box sx={{ 
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -52,12 +51,11 @@ function FilterCard({ search, handleSearchChange, ...props }) {
 
             <Collapse in={expanded} timeout="auto">
                 <Divider />
-                <Box style={{ padding: '0.5em 0.5em 1em 1em' }}>
+                <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
                     <Stack direction="column" spacing={0.5}>
                         <Typography variant="h6" style={{ fontSize: '0.8em' }} gutterBottom>
                         </Typography>
                         <SelectNovedad search={search} handleSearchChange={handleSearchChange} />
-                        {/* <ColorToggleButton /> */}
                         <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
                     </Stack>
                 </Box>

@@ -35,7 +35,7 @@ export default function VerticalBarChart({ search, ...props }) {
         }
         getData()
     }, [search])
-    console.log(list)
+
     const data = {
         datasets: [
             {
@@ -85,7 +85,6 @@ export default function VerticalBarChart({ search, ...props }) {
         },
       };
 
-    console.log(data)
     return (
         <>
             <Box style={{ height: '180px', paddingRight: '13px' }}>

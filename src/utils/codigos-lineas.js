@@ -716,3 +716,26 @@ export const codigos_lineas = [
     }
 
 ]
+
+export const torres_criticas = [
+    {
+      "categoria": "Estructura - Base",
+      "codigo": "LE01",
+      "descripcion": "con perfiles sueltos/flojos"
+    },
+    {
+      "categoria": "Estructura - Base",
+      "codigo": "LE04",
+      "descripcion": "con ausencia de Perfiles"
+    },
+    {
+      "categoria": "Estructura - Base",
+      "codigo": "LE15",
+      "descripcion": "con perfiles torcidos y/o deformados"
+    },
+    {
+      "categoria": "Picada",
+      "codigo": "LP09",
+      "descripcion": "Estructura sin acceso"
+    },
+  ]

@@ -61,7 +61,6 @@ export default function StyledChipUpdate({ handleReload, edit, value, field, id,
     //console.log(disable)
     function handleRequestToChange() {
         if (disable) {
-            console.log("disable")
             setNotificationDialog({
                 isOpen: true,
                 title: `No es posible cambiar el estado`,

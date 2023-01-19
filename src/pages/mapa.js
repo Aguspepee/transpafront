@@ -21,11 +21,9 @@ function Mapa() {
 
   const flyToPosition = (position) => {
     map.flyTo(position, 16)
-
   }
 
   const panToPosition = (box) => {
-    console.log(box.toString())
     if (box.toString() !== [[0, -90], [-90, 0]].toString()) {
       map?.fitBounds(box)
     }
@@ -69,20 +67,19 @@ function Mapa() {
               top: 0,
               left: 40,
               zIndex: 1000,
-              width: "68%"
+              width: "69%"
             }}
           >
             <Grid
               item
-              lg={7}
-              md={7}
-              xl={7}
+              lg={12}
+              md={12}
+              xl={12}
               xs={12}
             >
               <DataCard search={search} handleSearchChange={handleSearchChange} data={data} />
-
             </Grid>
-            <Grid
+{/*             <Grid
               item
               lg={5}
               md={5}
@@ -90,7 +87,7 @@ function Mapa() {
               xs={12}
             >
               <FilterCard search={search} handleSearchChange={handleSearchChange} />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid
             container
@@ -113,7 +110,6 @@ function Mapa() {
             >
               <AnalisisCard search={search} handleSearchChange={handleSearchChange} />
             </Grid>
-
           </Grid>
           <MapaLineas data={data} handleSetMap={handleSetMap} />
           <Grid

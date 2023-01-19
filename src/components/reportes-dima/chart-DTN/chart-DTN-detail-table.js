@@ -51,8 +51,6 @@ export default function CollapseDTNDetailTable({ date, ...rest }) {
         getData()
 
     }, [date, order, orderBy])
-    
-    console.log(results)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);

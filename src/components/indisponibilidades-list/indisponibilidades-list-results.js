@@ -143,8 +143,6 @@ export const IndisponibilidadesListResults = () => {
     getList()
   }, [reload, page, rowsPerPage, order, orderBy, search])
 
-  console.log(data)
-
   return (
     <>
       <Card sx={{}}>

@@ -36,7 +36,6 @@ export default function ColumnsEdit() {
     };
 
     const onChangeWidth = async (id, event) => {
-        console.log(event.target.value)
         columns = columns.map((column) => {
             column._id === id ? column.width = Number(event.target.value) : (column.width = column.width)
             return ({ ...column })

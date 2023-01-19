@@ -40,7 +40,6 @@ export default function NovedadesTable(props) {
         const getNovedades = async () => {
             const res = await novedadesGetWithMeta({ search })
             setNovedades(res.data)
-            console.log()
         }
         getNovedades()
     }, [search]

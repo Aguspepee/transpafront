@@ -19,7 +19,6 @@ export const ChartDIMA = ({ start, end, ...props }) => {
   const chartRef = useRef();
   const [loading, setLoading] = useState(true)
   const onClick = (event) => {
-    //console.log(getElementAtEvent(chartRef.current, event));
   }
 
   useEffect(() => {

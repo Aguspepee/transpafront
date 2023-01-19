@@ -7,7 +7,6 @@ import logo2 from './logo2.png';
 export function remitoPDF(remito) {
     const doc = new jsPDF()
     let end = 0
-    console.log(remito)
     //HEADER
     doc.autoTable({
         showHead: false,
