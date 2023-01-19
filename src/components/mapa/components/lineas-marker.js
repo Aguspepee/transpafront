@@ -55,7 +55,8 @@ const greyIcon = new L.Icon({
 });
 
 function LineasMarker({ piquete }) {
-    const position = [-43, -65]
+    //console.log(piquete)
+    //const position = [-43, -65]
     return (
 
         <Marker

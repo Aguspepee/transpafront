@@ -14,7 +14,6 @@ function Mapa() {
   const [data, setData] = useState([])
   const [search, setSearch] = useState({ reparadas: false, historico: false })
   const [map, setMap] = useState(null);
-  const [box, setBox] = useState([])
 
   const handleSetMap = (value) => {
     setMap(value)
@@ -26,8 +25,10 @@ function Mapa() {
   }
 
   const panToPosition = (box) => {
-    map.fitBounds(box)
-
+    console.log(box.toString())
+    if (box.toString() !== [[0, -90], [-90, 0]].toString()) {
+      map?.fitBounds(box)
+    }
   }
 
   const handleSearchChange = (value) => {
@@ -40,12 +41,10 @@ function Mapa() {
         const res = await lineasNovedadesGet({ search })
 
         //Obtiene maxima y minima latitud y longitud:
-        const top = -res.data.reduce((a, b) => Math.max(a, +b.latitud), 0)
-        const bottom = -res.data.reduce((a, b) => Math.min(a, +b.latitud), 90)
-        const left = -res.data.reduce((a, b) => Math.min(a, +b.longitud), 90)
-        const right = -res.data.reduce((a, b) => Math.max(a, +b.longitud), 0)
-        setBox([[left, top], [right, bottom]])
-        console.log([[left, top], [right, bottom]])
+        const top = -res.data.reduce((a, b) => Math.max(a, +b.latitud), 0) || 0
+        const bottom = -res.data.reduce((a, b) => Math.min(a, +b.latitud), 90) || 0
+        const left = -res.data.reduce((a, b) => Math.min(a, +b.longitud), 90) || 0
+        const right = -res.data.reduce((a, b) => Math.max(a, +b.longitud), 0) || 0
         panToPosition([[top, left], [bottom, right]])
         setData(res.data)
       } catch (error) {

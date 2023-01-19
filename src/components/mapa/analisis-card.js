@@ -26,7 +26,7 @@ const ExpandMore = styled((props) => {
 
 function AnalisisCard({ search, handleSearchChange, ...props }) {
     const [expanded, setExpanded] = useState(false)
-
+    console.log(search)
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -58,8 +58,8 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
             <Divider />
                 <Box style={{ padding: '0.5em 0.5em 1em 1em'}}>
                     <Stack direction="column" spacing={0.5}>
-                       <VerticalBarChart/>
-                        <DoughnutChart/>
+                       <VerticalBarChart search={search}/>
+                        {/* <DoughnutChart/> */}
                     </Stack>
                 </Box>
             </Collapse>

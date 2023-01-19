@@ -446,7 +446,7 @@ export const codigos_lineas = [
     {
         "categoria": "Estructura - Base",
         "codigo": "LE01",
-        "descripcion": "con perfiles sueltos\/flojos"
+        "descripcion": "con perfiles sueltos/flojos"
     },
     {
         "categoria": "Estructura - Base",
@@ -481,7 +481,7 @@ export const codigos_lineas = [
     {
         "categoria": "Estructura - Base",
         "codigo": "LE10",
-        "descripcion": "con presencia de Nido en Estructura y\/o Ménsula"
+        "descripcion": "con presencia de Nido en Estructura y/o Ménsula"
     },
     {
         "categoria": "Estructura - Base",
@@ -501,7 +501,7 @@ export const codigos_lineas = [
     {
         "categoria": "Estructura - Base",
         "codigo": "LE15",
-        "descripcion": "con perfiles torcidos y\/o deformados"
+        "descripcion": "con perfiles torcidos y/o deformados"
     },
     {
         "categoria": "Estructura - Base",

@@ -16,3 +16,10 @@ export function novedadesGetWithMeta({ search }) {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
+
+export function novedadesCantidades({ search }) {
+    let token = localStorage.getItem("token")
+    return instance.get(`novedades/cantidades?zonas=${search.zonas}&lineas=${search.lineas}&codigos=${search?.codigos?.toString()}&reparadas=${search.reparadas}&historico=${search.historico}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+}

@@ -1,4 +1,4 @@
-import { Card, CardContent, Divider, Typography, Stack, Collapse, Box, IconButton } from '@mui/material';
+import { Card, CardContent, Divider, Typography, Stack, Collapse, Box, IconButton, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css'
 import { useState } from 'react';
@@ -25,6 +25,8 @@ function FilterCard({ search, handleSearchChange, ...props }) {
         setExpanded(!expanded);
     };
 
+
+
     return (
         <Card>
             <Box sx={{
@@ -34,7 +36,7 @@ function FilterCard({ search, handleSearchChange, ...props }) {
                 flexWrap: 'wrap',
             }}>
                 <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
-                    Filtros
+                    Novedades
                 </Typography>
                 <ExpandMore
                     expand={expanded}
@@ -47,17 +49,16 @@ function FilterCard({ search, handleSearchChange, ...props }) {
                 </ExpandMore>
             </Box>
 
-           
+
             <Collapse in={expanded} timeout="auto">
-            <Divider />
-                <Box style={{ padding: '0.5em 0.5em 1em 1em'}}>
+                <Divider />
+                <Box style={{ padding: '0.5em 0.5em 1em 1em' }}>
                     <Stack direction="column" spacing={0.5}>
                         <Typography variant="h6" style={{ fontSize: '0.8em' }} gutterBottom>
                         </Typography>
-                        <SelectNovedad search={search} handleSearchChange={handleSearchChange}/>
-                        <ColorToggleButton />
-                        <SwitchLabels search={search} handleSearchChange={handleSearchChange}/>
-                        
+                        <SelectNovedad search={search} handleSearchChange={handleSearchChange} />
+                        {/* <ColorToggleButton /> */}
+                        <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
                     </Stack>
                 </Box>
             </Collapse>
