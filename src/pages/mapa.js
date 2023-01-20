@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Card, Grid } from '@mui/material';
 import { DashboardLayout } from '../layout/layout';
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import NovedadesCard from '../components/mapa/novedades-card';
 import DataCard from '../components/mapa/data-card';
 import { useMapEvents, Marker, Popup, useMap } from 'react-leaflet';
 import AnalisisCard from '../components/mapa/analisis-card';
+import Draggable from 'react-draggable';
 
 function Mapa() {
   const [data, setData] = useState([])
@@ -41,9 +42,11 @@ function Mapa() {
         //Obtiene maxima y minima latitud y longitud:
         const top = -res.data.reduce((a, b) => Math.max(a, +b.latitud), 0) || 0
         const bottom = -res.data.reduce((a, b) => Math.min(a, +b.latitud), 90) || 0
-        const left = -res.data.reduce((a, b) => Math.min(a, +b.longitud), 90) || 0
+        const left = -res.data.reduce((a, b) => Math.min(a, +b.longitud), 90) + 0.5 || 0
         const right = -res.data.reduce((a, b) => Math.max(a, +b.longitud), 0) || 0
-        panToPosition([[top, left], [bottom, right]])
+
+        //Si no tiene ubicación, panea el mapa a una vista general. Sino, lo panea a la línea
+        top === 0 ? panToPosition([[-42, -61], [-44, -75]]) : panToPosition([[top, left], [bottom, right]])
         setData(res.data)
       } catch (error) {
         console.log(error)
@@ -58,6 +61,7 @@ function Mapa() {
         <Box style={{
           position: 'relative'
         }}>
+         
           <Grid
             container
             spacing={1}
@@ -79,7 +83,7 @@ function Mapa() {
             >
               <DataCard search={search} handleSearchChange={handleSearchChange} data={data} />
             </Grid>
-{/*             <Grid
+            {/*             <Grid
               item
               lg={5}
               md={5}
@@ -111,6 +115,7 @@ function Mapa() {
               <AnalisisCard search={search} handleSearchChange={handleSearchChange} />
             </Grid>
           </Grid>
+          
           <MapaLineas data={data} handleSetMap={handleSetMap} />
           <Grid
             container
@@ -134,6 +139,7 @@ function Mapa() {
               <NovedadesCard search={search} handleSearchChange={handleSearchChange} flyToPosition={flyToPosition} />
             </Grid>
           </Grid>
+          
         </Box>
       </DashboardLayout>
     </>

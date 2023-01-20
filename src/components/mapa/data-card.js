@@ -20,7 +20,7 @@ const ExpandMore = styled((props) => {
 }));
 
 function FilterCard({ search, handleSearchChange, data, ...props }) {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(true)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);

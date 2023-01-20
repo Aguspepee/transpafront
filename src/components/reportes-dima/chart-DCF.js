@@ -1,7 +1,7 @@
 import { Line, getElementAtEvent } from 'react-chartjs-2';
 import { useRef } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Card, IconButton, Divider, Typography, Stack, Collapse, Tooltip, LinearProgress } from '@mui/material';
+import { Box, Grid, Card, IconButton, Divider, Typography,  Collapse, Tooltip, LinearProgress } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';

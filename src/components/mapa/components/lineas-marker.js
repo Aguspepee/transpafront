@@ -32,9 +32,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     }
 }));
 
-const violetIcon = new L.Icon({
+const greenIcon = new L.Icon({
     iconUrl:
-        'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-violet.png',
+        //'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
+        require('../../../icons/marker-green.png'),
     shadowUrl:
         'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
@@ -43,9 +44,9 @@ const violetIcon = new L.Icon({
     shadowSize: [41, 41],
 });
 
-const greyIcon = new L.Icon({
+const redIcon = new L.Icon({
     iconUrl:
-        'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-grey.png',
+        'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-red.png',
     shadowUrl:
         'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
@@ -55,13 +56,13 @@ const greyIcon = new L.Icon({
 });
 
 function LineasMarker({ piquete }) {
-    //console.log(piquete)
     //const position = [-43, -65]
     return (
-
+        <>{
+            (piquete?.novedades_reparadas?.toString() !== ""||piquete?.novedades_abiertas?.toString() !== "") &&
         <Marker
             //icon={piquete?.novedades?.some(e => e.codigo_valorac.includes('LC05')) ? violetIcon : greyIcon}
-            icon={piquete?.novedades?.toString() !== "" ? violetIcon : greyIcon}
+            icon={piquete?.novedades_abiertas?.toString() !== "" ? redIcon : greenIcon}
 
             position={[-Number(piquete.latitud), -Number(piquete.longitud)]}
         >
@@ -150,7 +151,8 @@ function LineasMarker({ piquete }) {
                     </Grid>
                 </Grid>
             </Popup>
-        </Marker>
+        </Marker>}
+        </>
 
     )
 }

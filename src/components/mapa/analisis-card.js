@@ -1,15 +1,16 @@
-import { Card, CardContent, Divider, Typography, Stack, Collapse, Box, IconButton } from '@mui/material';
+import { Card, Divider, Typography, Stack, Collapse, Box, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css'
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SelectNovedad from './components/select-novedad';
 import VerticalBarChart from './components/vertical-bar-chart';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { codigos_lineas, torres_criticas } from '../../utils/codigos-lineas';
 import { lighten, darken } from '@mui/system';
 import { Button } from '@mui/material';
+import SwitchLabels from './components/switch-labels';
+import DateRangeSlider from './components/date-range-slider';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -23,7 +24,7 @@ const ExpandMore = styled((props) => {
 }));
 
 function AnalisisCard({ search, handleSearchChange, ...props }) {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(true)
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -55,6 +56,11 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
         setValue(torres_criticas)
     }
 
+    const seleccionarTorresMapa = (value) => {
+        handleSearchChange({ ...search, codigos: [value] })
+        setValue(null)
+    }
+
     return (
         <Card>
             <Box sx={{
@@ -64,7 +70,7 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                 flexWrap: 'wrap',
             }}>
                 <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
-                    Análisis
+                    Novedades
                 </Typography>
                 <ExpandMore
                     expand={expanded}
@@ -80,7 +86,7 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                 <Divider />
                 <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
                     <Stack direction="column" spacing={2}>
-                        <VerticalBarChart search={search} />
+                        <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
                         <Box style={{ padding: '1em 0em 0em 0em' }}>
                             <Autocomplete
                                 multiple
@@ -97,7 +103,7 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                                 sx={{ width: '100%' }}
                                 size='small'
                                 onChange={(event, newValue) => handleChange(newValue)}
-                                renderInput={(params) => <TextField key={params.key}  {...params} label="Novedades" />}
+                                renderInput={(params) => <TextField key={params.key}  {...params} label="Filtro" />}
                                 renderGroup={(params) => {
                                     return (
                                         <li key={params.key}>
@@ -109,6 +115,8 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                             />
                         </Box>
                         <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button>
+                        <DateRangeSlider/>
+                        <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
                     </Stack>
                 </Box>
             </Collapse>
