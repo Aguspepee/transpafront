@@ -20,15 +20,16 @@ export default function SwitchLabels({ search, handleSearchChange, ...props }) {
   return (
     <FormGroup>
       <FormControlLabel control={
-      <Switch 
-      checked={reparadas}
-      onChange={handleChangeReparadas}
-      />} label="Reparadas" />
+        <Switch
+          checked={reparadas}
+          color="secondary"
+          onChange={handleChangeReparadas}
+        />} label="Reparadas" />
       <FormControlLabel control={
-      <Switch 
-      checked={historico}
-      onChange={handleChangeHistorico}
-      />} label="Historico" />
+        <Switch
+          checked={historico}
+          onChange={handleChangeHistorico}
+        />} label="Historico" />
     </FormGroup>
   );
 }

@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 
 
-function MapaLineas({ data, handleSetMap }) {
+function MapaLineas({ data, handleSetMap, search, ...props }) {
     const [position, setPosition] = useState([-43, -65])
     let line = []
     
@@ -36,7 +36,7 @@ function MapaLineas({ data, handleSetMap }) {
                 data?.map((piquete, index) => {
                     if (piquete.latitud) {
                         return (
-                            <LineasMarker key={index} piquete={piquete} />)
+                            <LineasMarker key={index} piquete={piquete} reparadas={search.reparadas}/>)
                     }
                 })
             } 

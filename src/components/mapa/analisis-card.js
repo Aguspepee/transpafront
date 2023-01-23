@@ -85,9 +85,10 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
             <Collapse in={expanded} timeout="auto">
                 <Divider />
                 <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
-                    <Stack direction="column" spacing={2}>
+                    <Stack direction="column" spacing={1}>
                         <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
-                        <Box style={{ padding: '1em 0em 0em 0em' }}>
+                        <Box style={{ padding: '0em 0em 0em 0em' }}>
+                        <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
                             <Autocomplete
                                 multiple
                                 limitTags={1}
@@ -115,7 +116,6 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                             />
                         </Box>
                         <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button>
-                        <DateRangeSlider/>
                         <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
                     </Stack>
                 </Box>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +12,10 @@ import { Bar, getElementAtEvent } from 'react-chartjs-2';
 import { Box } from '@mui/system';
 import { novedadesCantidades } from '../../../services/novedades';
 import { codigos_lineas } from '../../../utils/codigos-lineas';
+
+//Debounce para la busqueda
+import { BehaviorSubject } from 'rxjs';
+import { debounceTime, switchMap } from "rxjs/operators";
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +31,13 @@ export default function VerticalBarChart({ search, seleccionarTorresMapa, ...pro
   const [list, setList] = useState([])
   const chartRef = useRef();
 
+  //Debounce para la busqueda
+  const searchParams$ = useMemo(() => new BehaviorSubject([]), []);
+
+  useEffect(() => {
+    searchParams$.next({ search: search });
+  }, [search]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -36,7 +47,11 @@ export default function VerticalBarChart({ search, seleccionarTorresMapa, ...pro
         console.log(error)
       }
     }
-    getData()
+
+    const res = searchParams$
+    .pipe(debounceTime(500), switchMap(getData))
+    .subscribe();
+  return () => res.unsubscribe();
   }, [search])
 
   const onClick = (event) => {
@@ -64,16 +79,16 @@ export default function VerticalBarChart({ search, seleccionarTorresMapa, ...pro
     cornerRadius: 20,
     layout: { padding: 0 },
     maintainAspectRatio: false,
-    plugins: { 
+    plugins: {
       tooltip: {
         enabled: true,
         callbacks: {
           afterTitle: (context) => {
-            const body = codigos_lineas.filter((codigo_linea)=>codigo_linea?.codigo===context[0]?.label)
+            const body = codigos_lineas.filter((codigo_linea) => codigo_linea?.codigo === context[0]?.label)
             return body[0]?.categoria;
           },
           beforeBody: (context) => {
-            const body = codigos_lineas.filter((codigo_linea)=>codigo_linea?.codigo===context[0]?.label)
+            const body = codigos_lineas.filter((codigo_linea) => codigo_linea?.codigo === context[0]?.label)
             return body[0]?.descripcion;
           }
         }

@@ -1,13 +1,17 @@
 import { Typography, Box, Table, TableHead, TableBody, Paper, IconButton, Tooltip, withStyles } from '@mui/material';
 import 'leaflet/dist/leaflet.css'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { novedadesGetWithMeta } from '../../../services/novedades';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import { styled } from '@mui/material/styles';
 import EstadoChip from './estado-chip';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableRow, { tableRowClasses } from "@mui/material/TableRow";
+import { format } from 'date-fns';
 
+//Debounce para la busqueda
+import { BehaviorSubject } from 'rxjs';
+import { debounceTime, switchMap } from "rxjs/operators";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,12 +40,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function NovedadesTable(props) {
     const { search, flyToPosition, ...other } = props;
     const [novedades, setNovedades] = useState([])
+
+    //Debounce para la busqueda
+    const searchParams$ = useMemo(() => new BehaviorSubject([]), []);
+
+    useEffect(() => {
+        searchParams$.next({ search: search });
+    }, [search]);
+
     useEffect(() => {
         const getNovedades = async () => {
             const res = await novedadesGetWithMeta({ search })
             setNovedades(res.data)
         }
-        getNovedades()
+        const res = searchParams$
+            .pipe(debounceTime(500), switchMap(getNovedades))
+            .subscribe();
+        return () => res.unsubscribe();
     }, [search]
     )
     return (
@@ -86,7 +101,7 @@ export default function NovedadesTable(props) {
 
                                     </StyledTableCell >
                                     <StyledTableCell>
-                                        {novedad.fecha}
+                                        {format(new Date(novedad.fecha), 'dd/MM/yyyy')}
                                     </StyledTableCell>
                                     <StyledTableCell>
                                         {novedad.equipo}
