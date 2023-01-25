@@ -2,11 +2,13 @@ import * as React from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-export default function ToggleMinuciosasTerrestres() {
+export default function ToggleMinuciosasTerrestres({ search, handleSearchChange, ...props }) {
   const [alignment, setAlignment] = React.useState('web');
 
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
+  const handleChange = (event, newValue) => {
+    handleSearchChange({ ...search, inspecciones: newValue  })
+
+    setAlignment(newValue);
   };
 
   return (
@@ -19,8 +21,8 @@ export default function ToggleMinuciosasTerrestres() {
       fullWidth={true}
       size="small"
     >
-      <ToggleButton value="minuciosa" fullWidth>Minuciosa</ToggleButton>
-      <ToggleButton value="terrestre" fullWidth>Terrestre</ToggleButton>
+      <ToggleButton value="PINM" fullWidth>Minuciosa</ToggleButton>
+      <ToggleButton value="PINT" fullWidth>Terrestre</ToggleButton>
     </ToggleButtonGroup>
   );
 }

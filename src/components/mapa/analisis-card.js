@@ -12,6 +12,8 @@ import { Button } from '@mui/material';
 import SwitchLabels from './components/switch-labels';
 import DateRangeSlider from './components/date-range-slider';
 import ToggleMinuciosasTerrestres from './components/toggle-minuciosas-terrestres';
+import { MinuciosasTorta } from './components/minuciosas-torta';
+import { TerrestresTorta } from './components/terrestres-torta';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -89,7 +91,7 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                     <Stack direction="column" spacing={1}>
                         <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
                         <Box style={{ padding: '0em 0em 0em 0em' }}>
-                        <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
+                            <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
                             <Autocomplete
                                 multiple
                                 limitTags={1}
@@ -144,7 +146,11 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                 <Divider />
                 <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
                     <Stack direction="column" spacing={1}>
-                       <ToggleMinuciosasTerrestres/>
+                        <ToggleMinuciosasTerrestres search={search} handleSearchChange={handleSearchChange}/>
+                    </Stack>
+                    <Stack direction="row" spacing={0} style={{width:"100%"}}>
+                        <MinuciosasTorta search={search}/>
+                        <TerrestresTorta search={search}/>
                     </Stack>
                 </Box>
             </Collapse>
