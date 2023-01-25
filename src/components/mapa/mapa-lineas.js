@@ -1,7 +1,7 @@
 import { MapContainer, Polyline, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet';
-import { useMapEvents, Marker, Popup, useMap } from 'react-leaflet';
+import { useMapEvents, Marker, Popup, useMap, Tooltip } from 'react-leaflet';
 import LineasMarker from './components/lineas-marker';
 import { useState } from 'react';
 
@@ -12,12 +12,32 @@ import { useState } from 'react';
 function MapaLineas({ data, handleSetMap, search, ...props }) {
     const [position, setPosition] = useState([-43, -65])
     let line = []
-    
+
+    //Obtiene el array de lineas
     data?.forEach(piquete => {
         if (!!piquete.latitud) {
-            line.push ([-Number(piquete?.latitud), -Number(piquete?.longitud)])
+            line.push([-Number(piquete?.latitud), -Number(piquete?.longitud)])
         }
     })
+
+    //Obtiene el array de inspecciones
+    let prevInsp = null;
+    let lastPoint = null;
+    const lines = data.reduce((acc, obj) => {
+
+        if (prevInsp !== obj.minuciosas) {
+            if (obj?.latitud) {
+                acc.push({ insp: obj.minuciosas, coordinates: lastPoint ? [lastPoint, [-Number(obj?.latitud), -Number(obj?.longitud)]] : [[-Number(obj?.latitud), -Number(obj?.longitud)]] });
+            }
+        } else {
+            if (obj?.latitud) {
+                acc[acc.length - 1].coordinates.push([-Number(obj?.latitud), -Number(obj?.longitud)]);
+            }
+        }
+        lastPoint = [-Number(obj?.latitud), -Number(obj?.longitud)];
+        prevInsp = obj.minuciosas;
+        return acc;
+    }, []);
 
     return (
         <MapContainer
@@ -32,15 +52,25 @@ function MapaLineas({ data, handleSetMap, search, ...props }) {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-             {
+            {
                 data?.map((piquete, index) => {
                     if (piquete.latitud) {
                         return (
-                            <LineasMarker key={index} piquete={piquete} reparadas={search.reparadas}/>)
+                            <LineasMarker key={index} piquete={piquete} reparadas={search.reparadas} />)
                     }
                 })
-            } 
-            <Polyline pathOptions={{ color: 'purple' }} positions={line} />
+            }
+            {/* <Polyline pathOptions={{ color: 'purple' }} positions={line} /> */}
+            {lines?.map((line, index) => {
+                return (<>
+                    <Polyline key={index} pathOptions={{ color: line.insp === 0 ? '#D14343' : '#14B8A6', weight: 5 }} positions={line.coordinates}>
+                        <Tooltip sticky opacity={2}>
+                            {line.insp === 0 ? 'Tramo sin inspeccionar' : 'Tramo inspeccionado'}
+                        </Tooltip>
+                    </Polyline>
+                </>)
+
+            })}
 
         </MapContainer>
     )

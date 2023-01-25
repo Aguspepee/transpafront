@@ -11,6 +11,7 @@ import { lighten, darken } from '@mui/system';
 import { Button } from '@mui/material';
 import SwitchLabels from './components/switch-labels';
 import DateRangeSlider from './components/date-range-slider';
+import ToggleMinuciosasTerrestres from './components/toggle-minuciosas-terrestres';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -117,6 +118,33 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                         </Box>
                         <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button>
                         <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
+                    </Stack>
+                </Box>
+            </Collapse>
+            <Box sx={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+            }}>
+                <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
+                    Inspecciones
+                </Typography>
+                <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                    size="small"
+                >
+                    <ExpandMoreIcon size="small" />
+                </ExpandMore>
+            </Box>
+            <Collapse in={expanded} timeout="auto">
+                <Divider />
+                <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                    <Stack direction="column" spacing={1}>
+                       <ToggleMinuciosasTerrestres/>
                     </Stack>
                 </Box>
             </Collapse>

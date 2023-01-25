@@ -6,7 +6,6 @@ import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet';
 import { styled } from '@mui/material/styles';
-import Icon from '../../../images/t1';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -72,11 +71,12 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                     >
                         <Grid
                             item
+                            style={{display: 'flex'}}
                             lg={6}
                             md={6}
                             xl={6}
                             xs={6}>
-                            <Card style={{ heigth: '100%' }}>
+                            <Card style={{ heigth: "500px" }}>
                                 <Typography variant="h6" style={{ padding: '1.5em 1em 0em 1.1em', fontSize: '0.8em' }} gutterBottom>
                                     {`Piquete ${piquete?.piquete}`}
                                 </Typography>
@@ -104,9 +104,14 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                             xl={6}
                             xs={6}>
                             <Card >
-                                <Box style={{ heigth: "500px", alignItems: "center" }}>
-                                    <Box style={{ padding: "5px 5px 5px 40px" }}>
-                                        <Icon />
+                                <Box style={{ alignItems: "center" }}>
+                                    <Box style={{ padding: "5px 40px 5px 40px" }}>
+                                        <CardMedia
+                                            component="img"
+                                            height="150"
+                                            image={require("../../../images/towers/tower1.jpg")}
+                                            alt="Paella dish"
+                                        />
                                     </Box>
                                 </Box>
                             </Card>
@@ -134,8 +139,10 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                                                                 <StyledTableCell>
                                                                     {novedad.codif_txt_cod}
                                                                 </StyledTableCell>
-                                                                <StyledTableCell>
-                                                                    {novedad.fecha ? format(new Date(novedad.fecha), 'dd/MM/yyyy') : "-"}
+                                                                <StyledTableCell >
+                                                                    <Typography style={{ fontSize: "0.9em", color: novedad.valor_medido === 1 ? '#67A887' : '#AC4545', padding: "0em 0em 0em 0em", margin: "0em 0em 0em 0em" }}>
+                                                                        {novedad.fecha ? format(new Date(novedad.fecha), 'dd/MM/yyyy') : "-"}
+                                                                    </Typography>
                                                                 </StyledTableCell>
                                                             </StyledTableRow>
                                                         )
