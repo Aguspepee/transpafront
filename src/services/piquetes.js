@@ -24,6 +24,13 @@ export function lineasGet({ search }) {
     })
 }
 
+export function piquetesPorLinea() {
+    let token = localStorage.getItem("token")
+    return instance.get(`piquetes/piquetes-por-linea`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+}
+
 export function lineasNovedadesGet({ search }) {
     const fecha_inicio = search?.fecha_inicio ? new Date(search?.fecha_inicio).toISOString() : new Date(2020,0,1)
     const fecha_fin = search?.fecha_fin ? new Date(search?.fecha_fin).toISOString() : new Date()

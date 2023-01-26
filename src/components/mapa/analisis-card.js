@@ -1,4 +1,4 @@
-import { Card, Divider, Typography, Stack, Collapse, Box, IconButton } from '@mui/material';
+import { Card, Divider, Typography, Stack, Collapse, Box, IconButton, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css'
 import { useState } from 'react';
@@ -14,6 +14,7 @@ import DateRangeSlider from './components/date-range-slider';
 import ToggleMinuciosasTerrestres from './components/toggle-minuciosas-terrestres';
 import { MinuciosasTorta } from './components/minuciosas-torta';
 import { TerrestresTorta } from './components/terrestres-torta';
+/*   */
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -85,75 +86,78 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                     <ExpandMoreIcon size="small" />
                 </ExpandMore>
             </Box>
-            <Collapse in={expanded} timeout="auto">
-                <Divider />
-                <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
-                    <Stack direction="column" spacing={1}>
-                        <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
-                        <Box style={{ padding: '0em 0em 0em 0em' }}>
-                            <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
-                            <Autocomplete
-                                multiple
-                                limitTags={1}
-                                value={value ? value : []}
-                                isOptionEqualToValue={(option, value) => {
-                                    return (option.codigo === value.codigo)
-                                }}
-                                disableCloseOnSelect
-                                id="grouped-demo"
-                                options={options}
-                                groupBy={(option) => option.categoria}
-                                getOptionLabel={(a) => (`${a.codigo} ${a.descripcion}`)}
-                                sx={{ width: '100%' }}
-                                size='small'
-                                onChange={(event, newValue) => handleChange(newValue)}
-                                renderInput={(params) => <TextField key={params.key}  {...params} label="Filtro" />}
-                                renderGroup={(params) => {
-                                    return (
-                                        <li key={params.key}>
-                                            <GroupHeader>{params.group}</GroupHeader>
-                                            <GroupItems style={{ fontSize: "0.8em" }}>{params.children}</GroupItems>
-                                        </li>
-                                    )
-                                }}
-                            />
-                        </Box>
-                        <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button>
-                        <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
-                    </Stack>
-                </Box>
-            </Collapse>
-            <Box sx={{
-                alignItems: 'center',
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-            }}>
-                <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
-                    Inspecciones
-                </Typography>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    size="small"
-                >
-                    <ExpandMoreIcon size="small" />
-                </ExpandMore>
-            </Box>
-            <Collapse in={expanded} timeout="auto">
-                <Divider />
-                <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
-                    <Stack direction="column" spacing={1}>
-                        <ToggleMinuciosasTerrestres search={search} handleSearchChange={handleSearchChange}/>
-                    </Stack>
-                    <Stack direction="row" spacing={0} style={{width:"100%"}}>
-                        <MinuciosasTorta search={search}/>
-                        <TerrestresTorta search={search}/>
-                    </Stack>
-                </Box>
-            </Collapse>
+
+            <Divider />
+            <Paper sx={{ overflowX: "auto", width: "100%", height: `calc(100vh - 285px)` }}>
+                
+                    <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                        <Stack direction="column" spacing={1}>
+                            <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
+                            <Box style={{ padding: '0em 0em 0em 0em' }}>
+                                <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
+                                <Autocomplete
+                                    multiple
+                                    limitTags={1}
+                                    value={value ? value : []}
+                                    isOptionEqualToValue={(option, value) => {
+                                        return (option.codigo === value.codigo)
+                                    }}
+                                    disableCloseOnSelect
+                                    id="grouped-demo"
+                                    options={options}
+                                    groupBy={(option) => option.categoria}
+                                    getOptionLabel={(a) => (`${a.codigo} ${a.descripcion}`)}
+                                    sx={{ width: '100%' }}
+                                    size='small'
+                                    onChange={(event, newValue) => handleChange(newValue)}
+                                    renderInput={(params) => <TextField key={params.key}  {...params} label="Filtro" />}
+                                    renderGroup={(params) => {
+                                        return (
+                                            <li key={params.key}>
+                                                <GroupHeader>{params.group}</GroupHeader>
+                                                <GroupItems style={{ fontSize: "0.8em" }}>{params.children}</GroupItems>
+                                            </li>
+                                        )
+                                    }}
+                                />
+                            </Box>
+                            {/* <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button> */}
+                            <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
+                        </Stack>
+                    </Box>
+
+                    <Box sx={{
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
+                    }}>
+                        <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
+                            Inspecciones
+                        </Typography>
+                        <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                            size="small"
+                        >
+                            <ExpandMoreIcon size="small" />
+                        </ExpandMore>
+                    </Box>
+
+                    <Divider />
+                    <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em', height: '300' }}>
+                        <Stack direction="column" spacing={1}>
+                            <ToggleMinuciosasTerrestres search={search} handleSearchChange={handleSearchChange} />
+                        </Stack>
+                        <Stack direction="row" spacing={0} style={{ width: "100%" }}>
+                            <MinuciosasTorta search={search} />
+                            <TerrestresTorta search={search} />
+                        </Stack>
+                    </Box>
+               
+            </Paper>
         </Card>
     )
 }

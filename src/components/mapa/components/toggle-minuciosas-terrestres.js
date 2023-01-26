@@ -21,8 +21,8 @@ export default function ToggleMinuciosasTerrestres({ search, handleSearchChange,
       fullWidth={true}
       size="small"
     >
-      <ToggleButton value="PINM" fullWidth>Minuciosa</ToggleButton>
-      <ToggleButton value="PINT" fullWidth>Terrestre</ToggleButton>
+      <ToggleButton value="PINM" fullWidth>Minuciosas</ToggleButton>
+      <ToggleButton value="PINT" fullWidth>Terrestres</ToggleButton>
     </ToggleButtonGroup>
   );
 }

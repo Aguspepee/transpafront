@@ -105,11 +105,11 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                             xs={6}>
                             <Card >
                                 <Box style={{ alignItems: "center" }}>
-                                    <Box style={{ padding: "5px 40px 5px 40px" }}>
+                                    <Box style={{ padding: "5px 0px 5px 0px" }}>
                                         <CardMedia
                                             component="img"
                                             height="150"
-                                            image={require("../../../images/towers/tower1.jpg")}
+                                            image={require("../../../images/towers/tower2.jpg")}
                                             alt="Paella dish"
                                         />
                                     </Box>

@@ -1,5 +1,5 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import 'chartjs-adapter-moment';
 import { Chart, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
@@ -17,7 +17,7 @@ export const TerrestresTorta = ({ search, ...props }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await cantidadInspecciones({ search, inspecciones:'PINT' })
+      const res = await cantidadInspecciones({ search, inspecciones: 'PINT' })
       setResults(res.data)
     }
     getData()
@@ -26,21 +26,22 @@ export const TerrestresTorta = ({ search, ...props }) => {
   const data = {
     datasets: [
       {
-        data: [...results.map((result)=>result.cantidad),
-          results[0] ? undefined : 50
+        data: [...results.map((result) => result.cantidad),
+        results[0] ? undefined : 50
         ],
-        backgroundColor: [...results.map((result)=>colors_severity_terrestre[result._id]),
-          results[0] ? undefined : '#f1f1f1'
+        backgroundColor: [...results.map((result) => colors_severity_terrestre[result._id]),
+        results[0] ? undefined : '#f1f1f1'
         ],
         //borderColor: results.map((dato, index) => colors_palette[index]),
         //fill: true
       }
     ],
-    labels: [...results.map((result)=>result._id)
+    labels: [...results.map((result) => result._id)
     ]
 
   }
   const total = data.datasets[0].data.reduce((accumulator, currentValue) => accumulator + (currentValue === undefined ? 0 : currentValue), 0)
+  const inspeccionado = results.reduce((acc, cur) => acc + (cur.cantidad === undefined || cur._id === 0 || cur._id === 1 ? 0 : cur.cantidad), 0)
 
   const options = {
     animation: true,
@@ -89,6 +90,12 @@ export const TerrestresTorta = ({ search, ...props }) => {
         data={data}
         options={options}
       />
+      <Typography variant="h4" sx={{ textAlign: 'center', padding: '0em 0em 0em 0em', color: "gray" }}>
+        {`${Math.round(inspeccionado * 100 / total)}%`}
+      </Typography>
+      <Typography variant='h4' sx={{ textAlign: 'center', padding: '0em 0em 0em 0em', fontSize: "0.5em", color: "gray" }}>
+        {`INSPECCIONADO`}
+      </Typography>
     </Box>
 
   );
