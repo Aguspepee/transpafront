@@ -54,6 +54,7 @@ function MapaLineas({ data, lineas, handleSetMap, search, handleSearchChange, ..
             <LayerGroup>
             {
                 lineas?.map((linea, index) => {
+                    console.log(linea)
                     let coordinates = []
                     //Obtiene el array de lineas
                     linea?.piquetes?.forEach(piquete => {

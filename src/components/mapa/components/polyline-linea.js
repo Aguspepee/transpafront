@@ -1,6 +1,5 @@
-import { Polyline } from 'react-leaflet';
+import { Polyline, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
-import { Tooltip } from 'react-leaflet';
 import { useState } from 'react';
 
 
@@ -8,13 +7,12 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
 
     const [polylineWidth, setPolylineWidth] = useState(2);
 
-
-
     function handleMouseOver(e) {
         e.target.setStyle({
             weight: 5
         });
         setPolylineWidth(5)
+        e.target.openPopup()
     }
 
     function handleMouseOut(e) {
@@ -22,12 +20,12 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
             weight: 1
         });
         setPolylineWidth(2)
+        e.target.closePopup()
     }
 
     const handleClick = (e) => {
-        handleSearchChange({ ...search, lineas: e.target?._tooltip?.options?.children[0], zonas: e.target?._tooltip?.options?.children[1] })
+        handleSearchChange({ ...search, lineas: linea.linea, zonas: linea.zona })
     };
-
 
     return (
         <Polyline
@@ -35,17 +33,19 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
             key={linea.linea}
             pathOptions={{ color: color, weight: polylineWidth }}
             positions={coordinates}
-            /* onMouseOver={()=>handleMouseOver}
-            onMouseOut={handleMouseOut} */
             eventHandlers={{
                 click: handleClick,
                 mouseover: handleMouseOver,
                 mouseout: handleMouseOut
             }}
         >
-            <Tooltip sticky opacity={2}>
+            <Popup
+                sticky
+                opacity={2}
+            >
+                
                 {linea.linea}
-            </Tooltip>
+            </Popup>
         </Polyline>
     )
 }

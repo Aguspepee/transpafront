@@ -33,10 +33,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const greenIcon = new L.Icon({
     iconUrl:
-        //'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
         require('../../../icons/marker-green.png'),
     shadowUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        require('../../../icons/marker-shadow.png'),
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -45,9 +44,9 @@ const greenIcon = new L.Icon({
 
 const redIcon = new L.Icon({
     iconUrl:
-        'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-red.png',
+        require('../../../icons/marker-red.png'),
     shadowUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        require('../../../icons/marker-shadow.png'),
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -71,7 +70,7 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                     >
                         <Grid
                             item
-                            style={{display: 'flex'}}
+                            style={{ display: 'flex' }}
                             lg={6}
                             md={6}
                             xl={6}
@@ -105,7 +104,7 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                             xs={6}>
                             <Card >
                                 <Box style={{ alignItems: "center" }}>
-                                    <Box style={{ padding: "5px 0px 5px 0px" }}>
+                                    <Box style={{ padding: "0px 0px 0px 0px" }}>
                                         <CardMedia
                                             component="img"
                                             height="150"
