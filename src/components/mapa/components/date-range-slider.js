@@ -23,13 +23,14 @@ const DateRangeSlider = ({ search, handleSearchChange, ...props }) => {
   const [value, setValue] = useState([new Date('01/01/2020').getTime(), new Date().getTime()]);
 
   const handleChange = (event, newValue) => {
-    handleSearchChange({ ...search, fecha_inicio: newValue[0], fecha_fin: newValue[1]  })
+    handleSearchChange({ ...search, fecha_inicio: newValue[0], fecha_fin: newValue[1] })
     setValue(newValue);
   };
 
   return (
     <Box style={{ padding: '1em 2em 0em 2em' }}>
       <StyledSlider
+        //size='small'
         value={value}
         onChange={handleChange}
         valueLabelDisplay="on"

@@ -25,7 +25,9 @@ import Settings from './pages/settings';
 import Mapa from './pages/mapa';
 import Upload from './pages/upload';
 import ReportesDIMA from './pages/reportes-dima';
+import ReportesMantenimiento from './pages/reportes-mantenimiento';
 import Indisponibilidades from './pages/indisponibilidades';
+import ReportesGestionOT from './pages/reportes-gestionot';
 /* import SchedulerPersonas from './pages/scheduler-personas'; */
 
 function App() {
@@ -86,7 +88,8 @@ function App() {
 
             {/* Reportes*/}
             <Route path="/reportes/DIMA" element={<Private Component={ReportesDIMA} user={user} roles={["Administrador"]} />} />
-
+            <Route path="/reportes/mantenimiento" element={<Private Component={ReportesMantenimiento} user={user} roles={["Administrador"]} />} />
+            <Route path="/reportes/gestion-ot" element={<Private Component={ReportesGestionOT} user={user} roles={["Administrador"]} />} />
 
           </Routes>
 

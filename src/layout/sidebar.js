@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Divider, Drawer, useMediaQuery } from '@mui/material';
 import { Users as UsersIcon } from '../icons/users';
@@ -12,12 +12,22 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
 import PublicIcon from '@mui/icons-material/Public';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import SsidChartIcon from '@mui/icons-material/SsidChart';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 import { Typography } from '@mui/material';
 import { default as LinkMaterial } from '@mui/material/Link';
+import { NavItemGruped } from './nav-item-gruped';
+import { Transformer } from '../icons/transformer';
+import { Line } from '../icons/line';
+import { Tablero } from '../icons/tablero';
+import { Descargador } from '../icons/descargador';
 
 const items = [
   {
@@ -27,17 +37,94 @@ const items = [
     roles: ["Administrador", "Supervisor", "Inspector", "Asistente"]
   },
   {
-    href: '/mapa',
-    icon: (<PublicIcon fontSize="small" />),
-    title: 'Mapa',
-    roles: ["Administrador", "Supervisor"]
+    //href: '/reportes/DIMA',
+    icon: (<AssessmentIcon fontSize="small" />),
+    title: 'Reportes',
+    roles: ["Administrador"],
+     subitems: [
+      {
+        href: '/reportes/DIMA',
+        icon: (<TimelineIcon fontSize="small" />),
+        title: 'DIMA',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/mantenimiento',
+        icon: (<BarChartIcon fontSize="small" />),
+        title: 'Mantenimiento',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-ot',
+        icon: (<TableChartIcon fontSize="small" />),
+        title: 'Gestión OT',
+        roles: ["Administrador"]
+      },
+    ] 
   },
   {
-    href: '/reportes/DIMA',
-    icon: (<SsidChartIcon fontSize="small" />),
-    title: 'DIMA',
-    roles: ["Administrador"]
+    //href: '/reportes/DIMA',
+    icon: (<AccountTreeIcon fontSize="small" />),
+    title: 'Equipos',
+    roles: ["Administrador"],
+     subitems: [
+      {
+        href: '/reportes/DIMAsd',
+        icon: (<Transformer fontSize="small" />),
+        title: 'Transformadores',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/mantenimientosd',
+        icon: (<SsidChartIcon fontSize="small" />),
+        title: 'Interruptores',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<SsidChartIcon fontSize="small" />),
+        title: 'Seccionadores',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<SsidChartIcon fontSize="small" />),
+        title: 'Reconectadores',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<Descargador fontSize="small" />),
+        title: 'Descargadores',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<SsidChartIcon fontSize="small" />),
+        title: 'Celdas',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<SsidChartIcon fontSize="small" />),
+        title: 'Barras',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<Tablero fontSize="small" />),
+        title: 'Tableros',
+        roles: ["Administrador"]
+      },
+      {
+        href: '/reportes/gestion-otsd',
+        icon: (<Line fontSize="small" />),
+        title: 'Lineas',
+        roles: ["Administrador"]
+      },
+    ] 
   },
+
   {
     href: '/users-list',
     icon: (<UsersIcon fontSize="small" />),
@@ -49,18 +136,6 @@ const items = [
     icon: (<EventBusyIcon fontSize="small" />),
     title: 'Operaciones',
     roles: ["Administrador", "Supervisor"]
-  },
-  {
-    href: '/RPM',
-    icon: (<EventNoteIcon fontSize="small" />),
-    title: 'RPM',
-    roles: ["Administrador", "Supervisor"]
-  },
-  {
-    href: '/settings',
-    icon: (<SettingsIcon fontSize="small" />),
-    title: 'Configuracion',
-    roles: ["Administrador"]
   },
   {
     href: '/upload',
@@ -109,20 +184,29 @@ export const DashboardSidebar = (props) => {
         />
         <Box sx={{ flexGrow: 1, my: 2 }} >
           {items_filtrados.map((item) => (
-            <NavItem
-              key={item.title}
-              icon={item.icon}
-              href={item.href}
-              title={item.title}
+            <Fragment key={item.title}>
+              {item.subitems ?
+                <NavItemGruped
+                  key={item.title}
+                  icon={item.icon}
+                  href={item.href}
+                  title={item.title}
+                  subitems={item.subitems}
+                /> :
+                <NavItem
+                  key={item.title}
+                  icon={item.icon}
+                  href={item.href}
+                  title={item.title}
+                />
+              }
+            </Fragment>
 
-            />
           ))}
         </Box>
         <Divider sx={{ borderColor: '#2D3748' }} />
-
         <div style={{ padding: "2em 3em 1em 3em" }} >
-
-          <Typography variant="caption" display="block" gutterBottom style={{textSize:"0.5em"}}>
+          <Typography variant="caption" display="block" gutterBottom style={{ textSize: "0.5em" }}>
             Developed by
           </Typography>
           <LinkMaterial target="_blank" href="http://growup-digital.com" rel="noreferrer">
@@ -130,7 +214,6 @@ export const DashboardSidebar = (props) => {
               sx={{
                 width: 50
               }}
-
             />
           </LinkMaterial>
         </div>

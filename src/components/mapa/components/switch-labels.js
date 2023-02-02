@@ -18,21 +18,24 @@ export default function SwitchLabels({ search, handleSearchChange, ...props }) {
   };
 
   return (
-    <FormGroup>
+    <FormGroup style={{paddingLeft:"1em"}}>
       <FormControlLabel control={
         <Switch
           checked={reparadas}
+          //size="small"
           color="secondary"
           onChange={handleChangeReparadas}
         />} label="Reparadas" />
       <FormControlLabel control={
         <Switch
           checked={historico}
+          //size="small"
           onChange={handleChangeHistorico}
         />} label="Duplicadas" />
         <FormControlLabel control={
         <Switch
           checked={historico}
+          //size="small"
           onChange={handleChangeHistorico}
         />} label="Torres críticas" />
     </FormGroup>
