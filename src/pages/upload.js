@@ -22,6 +22,12 @@ function Upload() {
                         Configuración
                     </Typography>
                     <Uploader
+                        dbSubBaseURL="saps"
+                        Titulo="Base de datos General SAP (migración)"
+                        Subtitulo="Seleccione el archivo"
+                        fileTypes=".xlsx , xls"
+                    ></Uploader>
+                    <Uploader
                         dbSubBaseURL="equipos"
                         Titulo="Equipos SAP"
                         Subtitulo="Seleccione el archivo"

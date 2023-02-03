@@ -27,6 +27,8 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
         handleSearchChange({ ...search, lineas: linea.linea, zonas: linea.zona })
     };
 
+    
+
     return (
         <Polyline
             noClip={true}
@@ -42,6 +44,8 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
             <Popup
                 sticky
                 opacity={2}
+                
+                //position={[-45,-35]}
             >
                 
                 {linea.linea}

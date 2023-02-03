@@ -107,9 +107,6 @@ function MapaLineas({ data, lineas, handleSetMap, search, handleSearchChange, ..
                 )
             })}
             </LayerGroup>
-
-
-
         </MapContainer>
     )
 }

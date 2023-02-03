@@ -1,21 +1,36 @@
 import instance from "../config/axios"
 
 export function filterGeneral(config,zona){
-    return instance.get(`sapBase/filterGeneral/${config.Mes}-${config.Año}-${config.Cl_actividad_PM}-${config.Clase_de_orden}-${zona}-${config.Texto_breve}-${config.Pto_tbjo_resp}-${config.Operacion}-${config.BorrarDuplicados}`)
+    let token = localStorage.getItem("token")
+    return instance.get(`saps/filterGeneral/${config.Mes}-${config.Año}-${config.Cl_actividad_PM}-${config.Clase_de_orden}-${zona}-${config.Texto_breve}-${config.Pto_tbjo_resp}-${config.Operacion}-${config.BorrarDuplicados}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
 }
 
 export function distribucionHoraria(config,zona){
-    return instance.get(`sapBase/DistibucionHoraria/${config.Mes}-${config.Año}-${zona}`)
+    let token = localStorage.getItem("token")
+    return instance.get(`saps/DistibucionHoraria/${config.Mes}-${config.Año}-${zona}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
 }
 
 export function resumenAnual(config,zona){
-    return instance.get(`sapBase/resumenAnual/${config.Año}-${config.Cl_actividad_PM}-${config.Clase_de_orden}-${zona}-${config.Texto_breve}-${config.Pto_tbjo_resp}-${config.Operacion}-${config.BorrarDuplicados}`)
+    let token = localStorage.getItem("token")
+    return instance.get(`saps/resumenAnual/${config.Año}-${config.Cl_actividad_PM}-${config.Clase_de_orden}-${zona}-${config.Texto_breve}-${config.Pto_tbjo_resp}-${config.Operacion}-${config.BorrarDuplicados}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
 }
 
 export function horasPlanificadas(config, zona){
-    return instance.get(`/horas/byZone/${config.Mes}-${config.Año}-${zona}`)
+    let token = localStorage.getItem("token")
+    return instance.get(`/horas/byZone/${config.Mes}-${config.Año}-${zona}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
 }
 
 export function resumenSap(){
-    return instance.get(`sapBase/resumen/`)
+    let token = localStorage.getItem("token")
+    return instance.get(`saps/resumen/`, {
+        headers: { Authorization: `Bearer ${token}` }
+    })
 }

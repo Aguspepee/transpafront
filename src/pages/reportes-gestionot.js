@@ -8,25 +8,23 @@ const ref = React.createRef();
 function ReportesGestionOT() {
 
     return (
-        <>
-            <DashboardLayout>
-                <Box
-                    component="main"
-                    sx={{
-                        flexGrow: 1,
-                        py: 2
-                    }}
-                >
-                    <Container maxWidth={false}>
-                        <Card >
-                            <div ref={ref} style={{ width: "100%", overflow: "auto", display: "flex" }}>
-                                <Tabla ></Tabla>
-                            </div>
-                        </Card>
-                    </Container>
-                </Box>
-            </DashboardLayout>
-        </>
+        <DashboardLayout>
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    py: 2
+                }}
+            >
+                <Container maxWidth={false}>
+                    <Card >
+                        <div ref={ref} style={{ width: "100%", overflow: "auto", display: "flex" }}>
+                            <Tabla />
+                        </div>
+                    </Card>
+                </Container>
+            </Box>
+        </DashboardLayout>
     )
 }
 

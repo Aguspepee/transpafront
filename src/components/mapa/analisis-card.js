@@ -29,6 +29,9 @@ const ExpandMore = styled((props) => {
 
 function AnalisisCard({ search, handleSearchChange, ...props }) {
     const [expanded, setExpanded] = useState(true)
+    const [expandFecha, setExpandFecha] = useState(true)
+    const [expandNovedades, setExpandNovedades] = useState(true)
+    const [expandInspecciones, setExpandInspecciones] = useState(true)
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -66,35 +69,70 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
     }
 
     return (
-        <Card>
-            <Box sx={{
-                alignItems: 'center',
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-            }}>
-                <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
-                    Novedades
-                </Typography>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    size="small"
-                >
-                    <ExpandMoreIcon size="small" />
-                </ExpandMore>
-            </Box>
+        <>
+            <Stack spacing={2}>
+                <Card style={{height: `calc(10vh)`}} >
+                    <Box sx={{
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
+                        
+                    }}>
+                        <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
+                            Fecha
+                        </Typography>
+                        <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                            size="small"
+                        >
+                            <ExpandMoreIcon size="small" />
+                        </ExpandMore>
+                    </Box>
+                    <Divider />
+                    <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
+                </Card>
+                <Card style={{height: `calc(25.5vh)`}}>
+                    <Paper sx={{  width: "100%"}}>
+                        <Box sx={{
+                            alignItems: 'center',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                        }}>
+                            <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
+                                Novedades
+                            </Typography>
+                            <Box>
+                                <ExpandMore
+                                    expand={expanded}
+                                    onClick={handleExpandClick}
+                                    aria-expanded={expanded}
+                                    aria-label="show more"
+                                    size="small"
+                                >
+                                    <ExpandMoreIcon size="small" />
+                                </ExpandMore>
+                                <ExpandMore
+                                    expand={expanded}
+                                    onClick={handleExpandClick}
+                                    aria-expanded={expanded}
+                                    aria-label="show more"
+                                    size="small"
+                                >
+                                    <ExpandMoreIcon size="small" />
+                                </ExpandMore>
+                            </Box>
+                        </Box>
+                        <Divider />
+                        <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                            <Stack direction="column" spacing={1}>
+                                <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
+                                {/*   <Box style={{ padding: '0em 0em 0em 0em' }}>
 
-            <Divider />
-            <Paper sx={{ overflowX: "auto", width: "100%", height: `calc(100vh - 285px)` }}>
-                
-                    <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
-                        <Stack direction="column" spacing={1}>
-                            <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
-                            <Box style={{ padding: '0em 0em 0em 0em' }}>
-                                <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
                                 <Autocomplete
                                     multiple
                                     limitTags={1}
@@ -121,11 +159,13 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                                     }}
                                 />
                             </Box>
-                            {/* <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button> */}
-                            <SwitchLabels search={search} handleSearchChange={handleSearchChange} />
-                        </Stack>
-                    </Box>
-
+                            <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button> 
+                            <SwitchLabels search={search} handleSearchChange={handleSearchChange} /> */}
+                            </Stack>
+                        </Box>
+                    </Paper>
+                </Card>
+                <Card style={{height: `calc(33vh)`}}>
                     <Box sx={{
                         alignItems: 'center',
                         display: 'flex',
@@ -147,7 +187,7 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                     </Box>
 
                     <Divider />
-                    <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em', height: '300' }}>
+                    <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em', height: '260px' }}>
                         <Stack direction="column" spacing={1}>
                             <ToggleMinuciosasTerrestres search={search} handleSearchChange={handleSearchChange} />
                         </Stack>
@@ -156,9 +196,11 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                             <TerrestresTorta search={search} />
                         </Stack>
                     </Box>
-               
-            </Paper>
-        </Card>
+
+
+                </Card>
+            </Stack>
+        </>
     )
 }
 

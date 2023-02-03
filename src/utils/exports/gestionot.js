@@ -1,10 +1,26 @@
 import * as ExcelJS from "exceljs";
 import saveAs from "file-saver";
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { resumenSap } from "../../services/sap";
 
-export default function ExcelExport({ data, ...props }) {
+export default function ExcelExport({ ...props }) {
+  const [data , setData] = useState([])
+  const [reload , setReload] =useState(false)
   const values = data.map((dato) => Object.values(dato));
-  console.log(values);
+  useEffect(() => {
+    const update = async () => {
+      //Se crea una promesa compuesta
+      try {
+        const res = await resumenSap();
+        //setData(aux)
+        setReload(!reload)
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    update(reload);
+  }, []);
 
   //Define Workbook and WorkSheet
   const excelExport = () => {
@@ -473,63 +489,6 @@ export default function ExcelExport({ data, ...props }) {
 
       for (let j = 3; j < 20; j++) {}
     });
-
-    /*     //FEB 2022
-    worksheet.mergeCells("K3:L3");
-
-    worksheet.getCell("K3").value = "feb-22";
-    worksheet.getCell("K4").value = "Generadas";
-    worksheet.getCell("L4").value = "Cerradas";
-
-    worksheet.mergeCells("M3:N3");
-    worksheet.getCell("M3").value = "mar-22";
-    worksheet.getCell("M4").value = "Generadas";
-    worksheet.getCell("N4").value = "Cerradas";
-
-    worksheet.mergeCells("O3:P3");
-    worksheet.getCell("O3").value = "abr-22";
-    worksheet.getCell("O4").value = "Generadas";
-    worksheet.getCell("P4").value = "Cerradas";
-
-    worksheet.mergeCells("Q3:R3");
-    worksheet.getCell("Q3").value = "may-22";
-    worksheet.getCell("Q4").value = "Generadas";
-    worksheet.getCell("R4").value = "Cerradas";
-
-    worksheet.mergeCells("S3:T3");
-    worksheet.getCell("S3").value = "jun-22";
-    worksheet.getCell("S4").value = "Generadas";
-    worksheet.getCell("T4").value = "Cerradas";
-
-    worksheet.mergeCells("U3:V3");
-    worksheet.getCell("U3").value = "jul-22";
-    worksheet.getCell("U4").value = "Generadas";
-    worksheet.getCell("V4").value = "Cerradas";
-
-    worksheet.mergeCells("W3:X3");
-    worksheet.getCell("W3").value = "ago-22";
-    worksheet.getCell("W4").value = "Generadas";
-    worksheet.getCell("X4").value = "Cerradas";
-
-    worksheet.mergeCells("Y3:Z3");
-    worksheet.getCell("Y3").value = "sep-22";
-    worksheet.getCell("Y4").value = "Generadas";
-    worksheet.getCell("Z4").value = "Cerradas";
-
-    worksheet.mergeCells("AA3:AB3");
-    worksheet.getCell("AA3").value = "oct-22";
-    worksheet.getCell("AA4").value = "Generadas";
-    worksheet.getCell("AB4").value = "Cerradas";
-
-    worksheet.mergeCells("AC3:AD3");
-    worksheet.getCell("AC3").value = "nov-22";
-    worksheet.getCell("AC4").value = "Generadas";
-    worksheet.getCell("AD4").value = "Cerradas";
-
-    worksheet.mergeCells("AE3:AF3");
-    worksheet.getCell("AE3").value = "dic-22";
-    worksheet.getCell("AE4").value = "Generadas";
-    worksheet.getCell("AF4").value = "Cerradas"; */
 
     //ESQUINA
     worksheet.mergeCells("A1:A4");

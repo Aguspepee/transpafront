@@ -6,6 +6,7 @@ import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet';
 import { styled } from '@mui/material/styles';
+import { useState } from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,7 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     }
 }));
 
-const greenIcon = new L.Icon({
+const greenIcon1 = new L.Icon({
     iconUrl:
         require('../../../icons/marker-green.png'),
     shadowUrl:
@@ -42,9 +43,20 @@ const greenIcon = new L.Icon({
     shadowSize: [41, 41],
 });
 
-const redIcon = new L.Icon({
+const greenIcon2 = new L.Icon({
     iconUrl:
-        require('../../../icons/marker-red.png'),
+        require('../../../icons/marker-green.png'),
+    shadowUrl:
+        require('../../../icons/marker-shadow.png'),
+    iconSize: [28, 47],
+    iconAnchor: [15, 47],
+    popupAnchor: [1, -34],
+    shadowSize: [46, 46],
+});
+
+const redIcon1 = new L.Icon({
+    iconUrl:
+        require('../../../icons/marker-red-1x.png'),
     shadowUrl:
         require('../../../icons/marker-shadow.png'),
     iconSize: [25, 41],
@@ -53,8 +65,38 @@ const redIcon = new L.Icon({
     shadowSize: [41, 41],
 });
 
+const redIcon2 = new L.Icon({
+    iconUrl:
+        require('../../../icons/marker-red-2x.png'),
+    shadowUrl:
+        require('../../../icons/marker-shadow.png'),
+    iconSize: [28, 47],
+    iconAnchor: [15, 47],
+    popupAnchor: [1, -34],
+    shadowSize: [46, 46],
+});
+
 function LineasMarker({ piquete, reparadas, ...props }) {
 
+    const [redIcon, setRedIcon] = useState(redIcon1)
+    const [greenIcon, setGreenIcon] = useState(greenIcon1)
+    function handleMouseOverPopup(e) {
+        setRedIcon(redIcon2)
+        setGreenIcon(greenIcon2)
+        e.target.openPopup()
+    }
+
+    function handleMouseOutPopup(e) {
+        setRedIcon(redIcon1)
+        setGreenIcon(greenIcon1)
+        //e.target.closePopup()
+        
+    }
+
+    const handleClickPopup = (e) => {
+        e.target.openPopup()
+        /* handleSearchChange({ ...search, lineas: linea.linea, zonas: linea.zona })  */
+    };
     return (
         <>{
             ((reparadas && piquete?.novedades_reparadas?.toString() !== "") || piquete?.novedades_abiertas?.toString() !== "") &&
@@ -62,6 +104,11 @@ function LineasMarker({ piquete, reparadas, ...props }) {
                 //icon={piquete?.novedades?.some(e => e.codigo_valorac.includes('LC05')) ? violetIcon : greyIcon}
                 icon={piquete?.novedades_abiertas?.toString() !== "" ? redIcon : greenIcon}
                 position={[-Number(piquete.latitud), -Number(piquete.longitud)]}
+                eventHandlers={{
+                    click: handleClickPopup,
+                    mouseover: handleMouseOverPopup,
+                    mouseout: handleMouseOutPopup
+                }}
             >
                 <Popup >
                     <Grid

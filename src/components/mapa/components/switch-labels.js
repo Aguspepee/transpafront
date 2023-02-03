@@ -32,12 +32,12 @@ export default function SwitchLabels({ search, handleSearchChange, ...props }) {
           //size="small"
           onChange={handleChangeHistorico}
         />} label="Duplicadas" />
-        <FormControlLabel control={
+{/*         <FormControlLabel control={
         <Switch
           checked={historico}
           //size="small"
           onChange={handleChangeHistorico}
-        />} label="Torres críticas" />
+        />} label="Torres críticas" /> */}
     </FormGroup>
   );
 }

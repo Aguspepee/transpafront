@@ -123,7 +123,7 @@ export default function VerticalBarChart({ search, seleccionarTorresMapa, ...pro
 
   return (
     <>
-      <Box style={{ height: '180px', paddingRight: '13px' }}>
+      <Box style={{  paddingRight: '13px' }}>
         <Bar
           ref={chartRef}
           options={options}

@@ -25,7 +25,7 @@ function NovedadesCard({ search, location, flyToPosition, ...props }) {
     };
 
     return (
-        <Card>
+        <Card  style={{height: `calc(15.5vh)`}}>
             <Box sx={{
                 alignItems: 'center',
                 display: 'flex',
