@@ -71,13 +71,13 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
     return (
         <>
             <Stack spacing={2}>
-                <Card style={{height: `calc(10vh)`}} >
+                <Card style={{ height: `calc(10vh)` }} >
                     <Box sx={{
                         alignItems: 'center',
                         display: 'flex',
                         justifyContent: 'space-between',
                         flexWrap: 'wrap',
-                        
+
                     }}>
                         <Typography variant="h6" style={{ padding: '0.5em 0em 0em 1em', fontSize: '0.8em' }} gutterBottom>
                             Fecha
@@ -95,8 +95,8 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                     <Divider />
                     <DateRangeSlider search={search} handleSearchChange={handleSearchChange} />
                 </Card>
-                <Card style={{height: `calc(25.5vh)`}}>
-                    <Paper sx={{  width: "100%"}}>
+                <Card >
+                    <Paper sx={{ width: "100%" }}>
                         <Box sx={{
                             alignItems: 'center',
                             display: 'flex',
@@ -127,45 +127,46 @@ function AnalisisCard({ search, handleSearchChange, ...props }) {
                                 </ExpandMore>
                             </Box>
                         </Box>
+
                         <Divider />
                         <Box style={{ padding: '0.5em 0.5em 0.5em 0.5em' }}>
                             <Stack direction="column" spacing={1}>
                                 <VerticalBarChart search={search} seleccionarTorresMapa={seleccionarTorresMapa} />
-                                {/*   <Box style={{ padding: '0em 0em 0em 0em' }}>
+                                 <Box style={{ padding: '0em 0em 0em 0em' }}>
 
-                                <Autocomplete
-                                    multiple
-                                    limitTags={1}
-                                    value={value ? value : []}
-                                    isOptionEqualToValue={(option, value) => {
-                                        return (option.codigo === value.codigo)
-                                    }}
-                                    disableCloseOnSelect
-                                    id="grouped-demo"
-                                    options={options}
-                                    groupBy={(option) => option.categoria}
-                                    getOptionLabel={(a) => (`${a.codigo} ${a.descripcion}`)}
-                                    sx={{ width: '100%' }}
-                                    size='small'
-                                    onChange={(event, newValue) => handleChange(newValue)}
-                                    renderInput={(params) => <TextField key={params.key}  {...params} label="Filtro" />}
-                                    renderGroup={(params) => {
-                                        return (
-                                            <li key={params.key}>
-                                                <GroupHeader>{params.group}</GroupHeader>
-                                                <GroupItems style={{ fontSize: "0.8em" }}>{params.children}</GroupItems>
-                                            </li>
-                                        )
-                                    }}
-                                />
-                            </Box>
-                            <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button> 
-                            <SwitchLabels search={search} handleSearchChange={handleSearchChange} /> */}
+                                    <Autocomplete
+                                        multiple
+                                        limitTags={1}
+                                        value={value ? value : []}
+                                        isOptionEqualToValue={(option, value) => {
+                                            return (option.codigo === value.codigo)
+                                        }}
+                                        disableCloseOnSelect
+                                        id="grouped-demo"
+                                        options={options}
+                                        groupBy={(option) => option.categoria}
+                                        getOptionLabel={(a) => (`${a.codigo} ${a.descripcion}`)}
+                                        sx={{ width: '100%' }}
+                                        size='small'
+                                        onChange={(event, newValue) => handleChange(newValue)}
+                                        renderInput={(params) => <TextField key={params.key}  {...params} label="Filtro" />}
+                                        renderGroup={(params) => {
+                                            return (
+                                                <li key={params.key}>
+                                                    <GroupHeader>{params.group}</GroupHeader>
+                                                    <GroupItems style={{ fontSize: "0.8em" }}>{params.children}</GroupItems>
+                                                </li>
+                                            )
+                                        }}
+                                    />
+                                </Box>
+                                <Button variant='outlined' onClick={() => verTorresCriticas()}>Ver torres críticas</Button>
+                                <SwitchLabels search={search} handleSearchChange={handleSearchChange} /> 
                             </Stack>
                         </Box>
                     </Paper>
                 </Card>
-                <Card style={{height: `calc(33vh)`}}>
+                <Card style={{ height: `calc(33vh)` }}>
                     <Box sx={{
                         alignItems: 'center',
                         display: 'flex',
