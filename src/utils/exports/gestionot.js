@@ -3,17 +3,55 @@ import saveAs from "file-saver";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { resumenSap } from "../../services/sap";
+import { datos_columnas, datos_gestion } from "../datos_gestion";
 
 export default function ExcelExport({ ...props }) {
-  const [data , setData] = useState([])
-  const [reload , setReload] =useState(false)
+  const [month, setMonth] = useState("1")
+  const [data, setData] = useState([])
+  const [reload, setReload] = useState(false)
   const values = data.map((dato) => Object.values(dato));
+  let columns_modified = []
+  const columns = datos_columnas
+  let aux = datos_gestion
+
   useEffect(() => {
     const update = async () => {
       //Se crea una promesa compuesta
       try {
-        const res = await resumenSap();
-        //setData(aux)
+        const res = await resumenSap({ year: 23 });
+        if (res.data) {
+          for (let i = 1; i < 5; i++) {
+            for (let j = 1; j < 13; j++) {
+              aux[1][`G_${j}`] = res.data["gestion_aceites_generadas"][j - 1]?.ZN
+              aux[1][`C_${j}`] = res.data["gestion_aceites_cerradas"][j - 1]?.ZN
+              aux[2][`G_${j}`] = res.data["gestion_aceites_generadas"][j - 1]?.ZS
+              aux[2][`C_${j}`] = res.data["gestion_aceites_cerradas"][j - 1]?.ZS
+              aux[3][`G_${j}`] = res.data["gestion_aceites_generadas"][j - 1]?.ZO
+              aux[3][`C_${j}`] = res.data["gestion_aceites_cerradas"][j - 1]?.ZO
+              aux[4][`G_${j}`] = res.data["gestion_aceites_generadas"][j - 1]?.ZA
+              aux[4][`C_${j}`] = res.data["gestion_aceites_cerradas"][j - 1]?.ZA
+
+              aux[6][`G_${j}`] = res.data["mantenimiento_estaciones_generadas"][j - 1]?.ZN
+              aux[6][`C_${j}`] = res.data["mantenimiento_estaciones_cerradas"][j - 1]?.ZN
+              aux[7][`G_${j}`] = res.data["mantenimiento_estaciones_generadas"][j - 1]?.ZS
+              aux[7][`C_${j}`] = res.data["mantenimiento_estaciones_cerradas"][j - 1]?.ZS
+              aux[8][`G_${j}`] = res.data["mantenimiento_estaciones_generadas"][j - 1]?.ZO
+              aux[8][`C_${j}`] = res.data["mantenimiento_estaciones_cerradas"][j - 1]?.ZO
+              aux[9][`G_${j}`] = res.data["mantenimiento_estaciones_generadas"][j - 1]?.ZA
+              aux[9][`C_${j}`] = res.data["mantenimiento_estaciones_cerradas"][j - 1]?.ZA
+
+              aux[11][`G_${j}`] = res.data["mantenimiento_lineas_generadas"][j - 1]?.ZN
+              aux[11][`C_${j}`] = res.data["mantenimiento_lineas_cerradas"][j - 1]?.ZN
+              aux[12][`G_${j}`] = res.data["mantenimiento_lineas_generadas"][j - 1]?.ZS
+              aux[12][`C_${j}`] = res.data["mantenimiento_lineas_cerradas"][j - 1]?.ZS
+              aux[13][`G_${j}`] = res.data["mantenimiento_lineas_generadas"][j - 1]?.ZO
+              aux[13][`C_${j}`] = res.data["mantenimiento_lineas_cerradas"][j - 1]?.ZO
+              aux[14][`G_${j}`] = res.data["mantenimiento_lineas_generadas"][j - 1]?.ZA
+              aux[14][`C_${j}`] = res.data["mantenimiento_lineas_cerradas"][j - 1]?.ZA
+            }
+          }
+        }
+        setData(aux)
         setReload(!reload)
       } catch (e) {
         console.log(e);
@@ -21,6 +59,14 @@ export default function ExcelExport({ ...props }) {
     };
     update(reload);
   }, []);
+
+
+  columns_modified[0] = columns[0]
+  columns_modified[1] = columns[1]
+  columns_modified[2] = columns[2]
+  columns_modified[3] = {}
+  columns_modified[3]["Header"] = columns[3].Header
+  columns_modified[3]["columns"] = columns[3].columns.slice(0, month + 1)
 
   //Define Workbook and WorkSheet
   const excelExport = () => {
@@ -31,18 +77,19 @@ export default function ExcelExport({ ...props }) {
 
     //Array para automatizar los meses de 2022
     const p2022 = [
-      { mes: "ene-22", cell1: "I", cell2: "J", color: "E2EFDA" },
-      { mes: "feb-22", cell1: "K", cell2: "L", color: "E2EFDA" },
-      { mes: "mar-22", cell1: "M", cell2: "N", color: "E2EFDA" },
-      { mes: "abr-22", cell1: "O", cell2: "P", color: "E2EFDA" },
-      { mes: "may-22", cell1: "Q", cell2: "R", color: "E2EFDA" },
-      { mes: "jun-22", cell1: "S", cell2: "T", color: "E2EFDA" },
-      { mes: "jul-22", cell1: "U", cell2: "V", color: "E2EFDA" },
-      { mes: "ago-22", cell1: "W", cell2: "X", color: "E2EFDA" },
-      { mes: "sep-22", cell1: "Y", cell2: "Z", color: "E2EFDA" },
-      { mes: "oct-22", cell1: "AA", cell2: "AB", color: "E2EFDA" },
-      { mes: "nov-22", cell1: "AC", cell2: "AD", color: "E2EFDA" },
-      { mes: "dic-22", cell1: "AE", cell2: "AF", color: "E2EFDA" },
+      /* { mes: "", cell1: "I", cell2: "J", color: "E2EFDA" }, */
+      { mes: "ene-22", cell1: "K", cell2: "L", color: "E2EFDA" },
+      { mes: "feb-22", cell1: "M", cell2: "N", color: "E2EFDA" },
+      { mes: "mar-22", cell1: "O", cell2: "P", color: "E2EFDA" },
+      { mes: "abr-22", cell1: "Q", cell2: "R", color: "E2EFDA" },
+      { mes: "may-22", cell1: "S", cell2: "T", color: "E2EFDA" },
+      { mes: "jun-22", cell1: "U", cell2: "V", color: "E2EFDA" },
+      { mes: "jul-22", cell1: "W", cell2: "X", color: "E2EFDA" },
+      { mes: "ago-22", cell1: "Y", cell2: "Z", color: "E2EFDA" },
+      { mes: "sep-22", cell1: "AA", cell2: "AB", color: "E2EFDA" },
+      { mes: "oct-22", cell1: "AC", cell2: "AD", color: "E2EFDA" },
+      { mes: "nov-22", cell1: "AE", cell2: "AF", color: "E2EFDA" },
+      { mes: "dic-22", cell1: "AG", cell2: "AH", color: "E2EFDA" },
     ];
 
     //Populate table with Data
@@ -60,6 +107,11 @@ export default function ExcelExport({ ...props }) {
       { width: 12 },
       { width: 12 },
       { width: 20 },
+      { width: 12 },
+      { width: 12 },
+      { width: 12 },
+      { width: 12 },
+      { width: 12 },
       { width: 12 },
       { width: 12 },
       { width: 12 },
@@ -342,8 +394,59 @@ export default function ExcelExport({ ...props }) {
       wrapText: true,
     };
 
+    //GENERADAS 2022
+    worksheet.getCell("I4").value = "Generadas";
+    worksheet.getCell(`I4`).font = {
+      name: "Arial",
+      family: 4,
+      size: 11,
+      underline: false,
+      bold: true,
+    };
+    worksheet.getCell(`I4`).fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "DDEBF7" },
+    };
+    worksheet.getCell(`I4`).border = {
+      top: { style: "medium" },
+      left: { style: "medium" },
+      bottom: { style: "medium" },
+      right: { style: "medium" },
+    };
+    worksheet.getCell("I4").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+      wrapText: true,
+    };
+    //CERRADAS 2022
+    worksheet.getCell("J4").value = "Cerradas";
+    worksheet.getCell(`J4`).font = {
+      name: "Arial",
+      family: 4,
+      size: 11,
+      underline: false,
+      bold: true,
+    };
+    worksheet.getCell(`J4`).fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "DDEBF7" },
+    };
+    worksheet.getCell(`J4`).border = {
+      top: { style: "medium" },
+      left: { style: "medium" },
+      bottom: { style: "medium" },
+      right: { style: "medium" },
+    };
+    worksheet.getCell("J4").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+      wrapText: true,
+    };
+
     //PERIODO 2022
-    worksheet.mergeCells("H2:AF2");
+    worksheet.mergeCells("H2:J2");
     worksheet.getCell("H2").alignment = {
       vertical: "middle",
       horizontal: "center",
@@ -371,6 +474,7 @@ export default function ExcelExport({ ...props }) {
     };
 
     //ESPACIO 2022
+    worksheet.mergeCells("H3:J3");
     worksheet.getCell(`H3`).fill = {
       type: "pattern",
       pattern: "solid",
@@ -487,7 +591,7 @@ export default function ExcelExport({ ...props }) {
         wrapText: true,
       };
 
-      for (let j = 3; j < 20; j++) {}
+      for (let j = 3; j < 20; j++) { }
     });
 
     //ESQUINA

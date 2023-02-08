@@ -28,9 +28,9 @@ export function horasPlanificadas(config, zona){
     })
 }
 
-export function resumenSap(){
+export function resumenSap({year}){
     let token = localStorage.getItem("token")
-    return instance.get(`saps/resumen/`, {
+    return instance.get(`saps/resumen?year=${year}`, {
         headers: { Authorization: `Bearer ${token}` }
     })
 }
