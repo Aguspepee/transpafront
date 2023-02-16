@@ -41,7 +41,7 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
                 mouseout: handleMouseOut
             }}
         >
-            <Popup
+           {/*  <Popup
                 sticky
                 opacity={2}
                 
@@ -49,7 +49,7 @@ function PolylineLinea({ linea, coordinates, color, search, handleSearchChange, 
             >
                 
                 {linea.linea}
-            </Popup>
+            </Popup> */}
         </Polyline>
     )
 }

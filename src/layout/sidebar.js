@@ -29,6 +29,7 @@ import { Line } from '../icons/line';
 import { Tablero } from '../icons/tablero';
 import { Descargador } from '../icons/descargador';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LoupeIcon from '@mui/icons-material/Loupe';
 
 const items = [
   {
@@ -49,12 +50,12 @@ const items = [
         title: 'DIMA',
         roles: ["Administrador"]
       },
-      {
+/*       {
         href: '/reportes/mantenimiento',
         icon: (<BarChartIcon fontSize="small" />),
         title: 'Mantenimiento',
         roles: ["Administrador"]
-      },
+      }, */
       {
         href: '/reportes/gestion-ot',
         icon: (<TableChartIcon fontSize="small" />),
@@ -63,7 +64,7 @@ const items = [
       },
     ] 
   },
-  {
+ /*  {
     //href: '/reportes/DIMA',
     icon: (<AccountTreeIcon fontSize="small" />),
     title: 'Equipos',
@@ -124,24 +125,30 @@ const items = [
         roles: ["Administrador"]
       },
     ] 
-  },
-  {
+  }, */
+/*   {
     href: '/rpm',
     icon: (<CalendarMonthIcon fontSize="small" />),
     title: 'RPM',
     roles: ["Administrador", "Supervisor"]
-  },
+  }, */
   {
     href: '/users-list',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Usuarios',
-    roles: ["Administrador", "Supervisor"]
+    roles: ["Administrador"]
+  },
+  {
+    href: '/novedades',
+    icon: (<LoupeIcon fontSize="small" />),
+    title: 'Novedades',
+    roles: ["Administrador","Supervisor","Inspector"]
   },
   {
     href: '/indisponibilidades',
     icon: (<EventBusyIcon fontSize="small" />),
     title: 'Operaciones',
-    roles: ["Administrador", "Supervisor"]
+    roles: ["Administrador"]
   },
   {
     href: '/upload',

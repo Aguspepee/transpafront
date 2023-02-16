@@ -83,7 +83,7 @@ function LineasMarker({ piquete, reparadas, ...props }) {
     function handleMouseOverPopup(e) {
         setRedIcon(redIcon2)
         setGreenIcon(greenIcon2)
-        e.target.openPopup()
+        //e.target.openPopup()
     }
 
     function handleMouseOutPopup(e) {

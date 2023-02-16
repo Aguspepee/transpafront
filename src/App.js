@@ -29,6 +29,7 @@ import ReportesMantenimiento from './pages/reportes-mantenimiento';
 import Indisponibilidades from './pages/indisponibilidades';
 import ReportesGestionOT from './pages/reportes-gestionot';
 import RPM from './pages/rpm';
+import Novedades from './pages/novedades';
 
 function App() {
   console.log(process.env.REACT_APP_BACKEND_URL)
@@ -66,9 +67,9 @@ function App() {
 
             {/* Users */}
             <Route path="/users-account" element={<Private Component={UsersAccount} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
-            <Route path="/users-create" element={<Private Component={UsersCreate} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
-            <Route path="/users-edit/:id" element={<Private Component={UsersEdit} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
-            <Route path="/users-list" element={<Private Component={UsersList} user={user} roles={["Administrador", "Supervisor", "Inspector", "Asistente"]} />} />
+            <Route path="/users-create" element={<Private Component={UsersCreate} user={user} roles={["Administrador"]} />} />
+            <Route path="/users-edit/:id" element={<Private Component={UsersEdit} user={user} roles={["Administrador"]} />} />
+            <Route path="/users-list" element={<Private Component={UsersList} user={user} roles={["Administrador"]} />} />
             <Route path="/users-login" element={<UsersLogin />} />
 
             {/* Loading */}
@@ -79,6 +80,9 @@ function App() {
 
             {/* Indisponibilidades*/}
             <Route path="/indisponibilidades" element={<Private Component={Indisponibilidades} user={user} roles={["Administrador"]} />} />
+
+            {/* Novedades*/}
+            <Route path="/novedades" element={<Private Component={Novedades} user={user} roles={["Administrador","Supervisor","Inspector"]} />} />
 
             {/* Mapa*/}
             <Route path="/mapa" element={<Private Component={Mapa} user={user} roles={["Administrador"]} />} />
