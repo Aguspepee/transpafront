@@ -18,7 +18,7 @@ export default function ExcelExport({ ...props }) {
     const update = async () => {
       //Se crea una promesa compuesta
       try {
-        const res = await resumenSap({ year: 23 });
+        const res = await resumenSap({ year: 22 });
         if (res.data) {
           for (let i = 1; i < 5; i++) {
             for (let j = 1; j < 13; j++) {

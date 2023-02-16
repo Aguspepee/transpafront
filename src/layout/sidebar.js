@@ -28,6 +28,7 @@ import { Transformer } from '../icons/transformer';
 import { Line } from '../icons/line';
 import { Tablero } from '../icons/tablero';
 import { Descargador } from '../icons/descargador';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const items = [
   {
@@ -124,7 +125,12 @@ const items = [
       },
     ] 
   },
-
+  {
+    href: '/rpm',
+    icon: (<CalendarMonthIcon fontSize="small" />),
+    title: 'RPM',
+    roles: ["Administrador", "Supervisor"]
+  },
   {
     href: '/users-list',
     icon: (<UsersIcon fontSize="small" />),

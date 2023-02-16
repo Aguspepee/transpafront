@@ -28,7 +28,7 @@ import ReportesDIMA from './pages/reportes-dima';
 import ReportesMantenimiento from './pages/reportes-mantenimiento';
 import Indisponibilidades from './pages/indisponibilidades';
 import ReportesGestionOT from './pages/reportes-gestionot';
-/* import SchedulerPersonas from './pages/scheduler-personas'; */
+import RPM from './pages/rpm';
 
 function App() {
   console.log(process.env.REACT_APP_BACKEND_URL)
@@ -83,6 +83,9 @@ function App() {
             {/* Mapa*/}
             <Route path="/mapa" element={<Private Component={Mapa} user={user} roles={["Administrador"]} />} />
 
+            {/* RPM*/}
+            <Route path="/rpm" element={<Private Component={RPM} user={user} roles={["Administrador"]} />} />
+
             {/* Actualiar*/}
             <Route path="/upload" element={<Private Component={Upload} user={user} roles={["Administrador"]} />} />
 
@@ -90,6 +93,7 @@ function App() {
             <Route path="/reportes/DIMA" element={<Private Component={ReportesDIMA} user={user} roles={["Administrador"]} />} />
             <Route path="/reportes/mantenimiento" element={<Private Component={ReportesMantenimiento} user={user} roles={["Administrador"]} />} />
             <Route path="/reportes/gestion-ot" element={<Private Component={ReportesGestionOT} user={user} roles={["Administrador"]} />} />
+
 
           </Routes>
 
