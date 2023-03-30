@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="barras.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.84096521"
+     inkscape:cx="104.64167"
+     inkscape:cy="777.67783"
+     inkscape:window-width="2560"
+     inkscape:window-height="1494"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g501">
+      <rect
+         style="fill:#000000;stroke:#000000;stroke-width:0.165"
+         id="rect234"
+         width="40.271183"
+         height="106.97034"
+         x="49.709743"
+         y="83.373924" />
+      <rect
+         style="fill:#000000;stroke:#000000;stroke-width:0.165"
+         id="rect234-1"
+         width="40.271183"
+         height="106.97034"
+         x="96.273308"
+         y="83.37394" />
+    </g>
+    <ellipse
+       style="fill:#000000;stroke:#000000;stroke-width:0.165"
+       id="path288"
+       cx="176.18643"
+       cy="181.22034"
+       rx="13.84322"
+       ry="12.584745" />
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:0.165"
+       d="m 33.978813,124.58898 -3.775425,90.61017"
+       id="path353" />
+  </g>
+</svg>

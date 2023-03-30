@@ -5,8 +5,6 @@ export function deleteAll(dbSubBaseURL) {
 }
 
 export function createAll(dbSubBaseURL, json) {
-    let token = localStorage.getItem("token")
-    return instance.post(`${dbSubBaseURL}/`, json, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+
+    return instance.post(`${dbSubBaseURL}/`, json)
 }

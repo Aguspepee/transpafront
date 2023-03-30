@@ -2,33 +2,21 @@ import instance from "../config/axios"
 
 //rutas Axios
 export function userRegister(user) {
-    let token = localStorage.getItem("token")
-    return instance.post(`users/register`, user, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.post(`users/register`, user)
 }
 
 export function userGetAll(user) {
-    let token = localStorage.getItem("token")
-    return instance.get(`users/`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
-} 
+    return instance.get(`users/`)
+}
 
 //Search
 export function userSearch(nombre) {
-    let token = localStorage.getItem("token")
-    return instance.get(`users/search?nombre=${nombre}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.get(`users/search?nombre=${nombre}`)
 }
 
 //Get Names 
 export function userGetNames() {
-    let token = localStorage.getItem("token")
-    return instance.get(`users/names`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.get(`users/names`)
 }
 
 export function userLogin(user) {
@@ -36,50 +24,30 @@ export function userLogin(user) {
 }
 
 export function userLogout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('token');
 }
 
 export function userWhoami() {
-    let token = localStorage.getItem("token")
-
-    return instance.post(`users/whoami`, "hola", {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.post(`users/whoami`, "hola")
 }
 
 export function userEdit(user, id) {
-    let token = localStorage.getItem("token")
-    return instance.put(`users/edit/${id}`, user, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.put(`users/edit/${id}`, user)
 }
 
 export function userDelete(id) {
-    let token = localStorage.getItem("token")
-    return instance.delete(`users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.delete(`users/${id}`)
 }
 
 export function userOne(id) {
-    let token = localStorage.getItem("token")
-    return instance.get(`users/one/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.get(`users/one/${id}`)
 }
 
+
 export function userImage(id, formData) {
-    console.log(formData)
-    let token = localStorage.getItem("token")
-    return instance.put(`users/image/${id}-users`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.put(`users/image/${id}-users`, formData)
 }
 
 export function userUpdate() {
-    let token = localStorage.getItem("token")
-    return instance.put(`users/update`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    return instance.put(`users/update`)
 }

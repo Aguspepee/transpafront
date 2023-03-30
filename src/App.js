@@ -6,6 +6,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserContext from './context/userContext';
+import io from 'socket.io-client';
+
 
 //Private Routes
 import Private from './components/Private';
@@ -30,12 +32,20 @@ import Indisponibilidades from './pages/indisponibilidades';
 import ReportesGestionOT from './pages/reportes-gestionot';
 import RPM from './pages/rpm';
 import Novedades from './pages/novedades';
+import createSocket from './config/socket';
+
+const socket = createSocket(localStorage.getItem('token'));
 
 function App() {
-  console.log(process.env.REACT_APP_BACKEND_URL)
   const [user, setUser] = useContext(UserContext);
   const [loadingUser, setLoadingUser] = useState(true)
   const [expirationTime, setExpirationTime] = useState(1000000000000)
+
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connected to server');
+    });
+  }, [user]);
 
   useEffect(() => {
     const Login = async () => {
@@ -82,7 +92,7 @@ function App() {
             <Route path="/indisponibilidades" element={<Private Component={Indisponibilidades} user={user} roles={["Administrador"]} />} />
 
             {/* Novedades*/}
-            <Route path="/novedades" element={<Private Component={Novedades} user={user} roles={["Administrador","Supervisor","Inspector"]} />} />
+            <Route path="/novedades" element={<Private Component={Novedades} user={user} roles={["Administrador", "Supervisor", "Inspector"]} />} />
 
             {/* Mapa*/}
             <Route path="/mapa" element={<Private Component={Mapa} user={user} roles={["Administrador"]} />} />
